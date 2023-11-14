@@ -2,10 +2,9 @@ package com.example.snapbin.Components
 
 
 import android.util.Log
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -17,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snapbin.R
 import com.example.snapbin.ui.theme.Bar_Color
+import com.example.snapbin.ui.theme.TopGreen
 
 @Composable
 fun NormalTextComponents(value: String) {
@@ -157,12 +158,13 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
 fun CheckboxComponents (value: String, onTextSelected: (String) -> Unit) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .heightIn(56.dp),
+        .heightIn(50.dp)
+        .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ){
-      val checkState = remember {
-          mutableStateOf(false)
-      }
+        val checkState = remember {
+            mutableStateOf(false)
+        }
         Checkbox(checked = checkState.value,
             onCheckedChange = {
                 checkState.value != checkState.value
@@ -205,6 +207,35 @@ fun ClicableTextComponents(value: String, onTextSelected: (String) -> Unit){
             }
     })
 
+}
+
+@Composable
+fun ButtonComponent(value: String){
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(48.dp)
+            .padding(20.dp),
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+
+    ) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(48.dp)
+            .background(
+                brush = Brush.horizontalGradient(listOf(TopGreen, Bar_Color)),
+                shape = RoundedCornerShape(50.dp)
+            ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = value,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold)
+        }
+
+    }
 }
 
 @Preview
