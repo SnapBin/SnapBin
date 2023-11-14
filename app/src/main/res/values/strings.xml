@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SnapBin</string>
+    <string name="Title">SnapBin</string>
+    <string name="Welcome">Create your Account</string>
+    <string name="FirstName">FirstName</string>
+    <string name="Hide_password">Hide Password</string>
+    <string name="Show_Password">Show Password</string>
+    <string name="Lastname">Lastname</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Re_confirm">Re-Type Password</string>
+    <string name="Terms_and_condition">By continuing you accept our Privacy Policy and Term of Use</string>
+    <string name="Terms_and_conditions_heading">Terms of Use</string>
+</resources>
