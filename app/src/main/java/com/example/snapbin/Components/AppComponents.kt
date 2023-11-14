@@ -9,16 +9,21 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
@@ -46,10 +51,13 @@ import com.example.snapbin.ui.theme.TopGreen
 
 @Composable
 fun NormalTextComponents(value: String) {
-    TopAppBar (
-        title = { Text(
-            text="SnapBin" ,
 
+    TopAppBar (
+        modifier = Modifier.height(75.dp),
+        backgroundColor = Color.Blue,
+        title = {
+            Text(
+            text="SnapBin",
             fontSize = 32.sp ,
             fontWeight= FontWeight.Medium,
             color= Color.Black,
@@ -58,9 +66,10 @@ fun NormalTextComponents(value: String) {
             textAlign = TextAlign.Center
             )
 
-        }
+        },
+//        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Yellow)
     )
-    
+
 }
 @Composable
 fun WelcomeComponent(value: String) {
@@ -86,6 +95,7 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector){
             .padding(10.dp),
 
         label = {Text(text = labelValue)},
+
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Bar_Color,
             focusedLabelColor = Bar_Color,
@@ -231,23 +241,23 @@ fun ButtonComponent(value: String){
         onClick = { /*TODO*/ },
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(48.dp)
-            .padding(20.dp),
+            .heightIn(0.dp)
+            .padding(15.dp),
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent)
 
     ) {
         Box(modifier = Modifier
             .fillMaxWidth()
-            .heightIn(48.dp)
+            .heightIn(50.dp)
             .background(
                 brush = Brush.horizontalGradient(listOf(TopGreen, Bar_Color)),
-                shape = RoundedCornerShape(80.dp)
+                shape = RoundedCornerShape(10.dp)
             ),
             contentAlignment = Alignment.Center
         ) {
             Text(text = value,
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold)
         }
 
@@ -321,10 +331,10 @@ fun NormalTextComponent(value: String) {
             .fillMaxWidth()
             .heightIn(min = 40.dp),
         style = TextStyle(
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal
-        ), color = colorResource(id = R.color.gray),
+        ), color = colorResource(id = R.color.Bar_Color),
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.Underline
     )

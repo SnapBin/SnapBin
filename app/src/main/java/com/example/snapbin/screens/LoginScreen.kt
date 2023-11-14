@@ -9,7 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.Message
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,14 +36,14 @@ fun LoginScreen() {
             NormalTextComponents(value = stringResource(R.string.Title))
             WelcomeComponent(value = "Welcome Back")
 
-            MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Message)
+            MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Mail)
 
             PasswordFieldComponent(labelValue = "Password", imageVector = Icons.Default.Lock)
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             NormalTextComponent(value = stringResource(R.string.Forgot_your_Passsword))
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             ButtonComponent(value = "Login")
-            Spacer(modifier = Modifier.height(40.dp))
+//            Spacer(modifier = Modifier.height(40.dp))
             DividerTextComponent()
 
             ClicableLoginTextComponents(tryingToLogin = false, onTextSelected = {
