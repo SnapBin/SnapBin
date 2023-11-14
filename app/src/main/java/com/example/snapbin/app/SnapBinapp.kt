@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
+import com.example.snapbin.screens.LoginScreen
 import com.example.snapbin.screens.SignUpScreen
 import com.example.snapbin.screens.TermsandConditionsScreen
 
@@ -27,6 +28,9 @@ fun SnapBinapp()
 
                 is Screen.TermsandConditionsScreen -> {
                     TermsandConditionsScreen()
+                }
+                is Screen.LoginScreen -> {
+                    LoginScreen()
                 }
             }
 

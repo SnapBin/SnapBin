@@ -29,7 +29,7 @@ fun SignUpScreen() {
         Column (modifier = Modifier.fillMaxSize()){
             NormalTextComponents(value = stringResource(R.string.Title))
             WelcomeComponent(value = stringResource(R.string.Welcome))
-//            Spacer(modifier = Modifier.height(10.dp))
+
             MyTextFieldComponent(labelValue = stringResource(R.string.FirstName),
                 imageVector = Icons.Default.Person
             )
@@ -48,6 +48,13 @@ fun SignUpScreen() {
 
             ButtonComponent(value = stringResource(R.string.Sign_in))
 
+            DividerTextComponent()
+            Spacer(modifier = Modifier.height(20.dp))
+
+            ClicableLoginTextComponents(tryingToLogin = true, onTextSelected = {
+                SnapBinAppRoute.navigateTo((Screen.LoginScreen))
+
+            })
 
         }
 

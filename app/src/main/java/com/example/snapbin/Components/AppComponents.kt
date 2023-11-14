@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,20 +20,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snapbin.R
 import com.example.snapbin.ui.theme.Bar_Color
+import com.example.snapbin.ui.theme.GrayColor
+import com.example.snapbin.ui.theme.TextColor
 import com.example.snapbin.ui.theme.TopGreen
 
 @Composable
@@ -45,8 +54,7 @@ fun NormalTextComponents(value: String) {
             fontWeight= FontWeight.Medium,
             color= Color.Black,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp),
+                .fillMaxWidth(),
             textAlign = TextAlign.Center
             )
 
@@ -84,7 +92,9 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector){
             cursorColor = Bar_Color,
             backgroundColor = Bar_Color
         ),
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
         value = textValue.value,
         onValueChange = {
             textValue.value = it
@@ -92,13 +102,15 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector){
         leadingIcon = {
             Icon( imageVector = imageVector, contentDescription = ""
             )
-        }
+        },
+
     )
 
 }
 
 @Composable
 fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
+    val locakFocusManager = LocalFocusManager.current
     val password = remember { mutableStateOf("") }
 
     val passwordVisible = remember { mutableStateOf(false) }
@@ -114,7 +126,11 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
             cursorColor = Bar_Color,
             backgroundColor = Bar_Color
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+        singleLine = true,
+        keyboardActions = KeyboardActions{locakFocusManager.clearFocus()
+        },
+        maxLines = 1,
         value = password.value,
         onValueChange = {
             password.value = it
@@ -226,7 +242,7 @@ fun ButtonComponent(value: String){
             .heightIn(48.dp)
             .background(
                 brush = Brush.horizontalGradient(listOf(TopGreen, Bar_Color)),
-                shape = RoundedCornerShape(50.dp)
+                shape = RoundedCornerShape(80.dp)
             ),
             contentAlignment = Alignment.Center
         ) {
@@ -237,6 +253,83 @@ fun ButtonComponent(value: String){
 
     }
 }
+
+@Composable
+fun DividerTextComponent() {
+    Row(modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Divider(modifier = Modifier
+            .fillMaxWidth().padding(10.dp)
+            .weight(1f),
+
+        color = GrayColor,
+        thickness = 1.dp)
+    
+        Text(modifier = Modifier.padding(8.dp), text = "or", fontSize = 18.sp, color = TextColor)
+        Divider(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f),
+            color = GrayColor,
+            thickness = 1.dp)
+    }
+}
+
+@Composable
+fun ClicableLoginTextComponents(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit){
+    val initialText = if(tryingToLogin) "Already have an account? " else "Don't have an account yet? "
+    val loginText = if(tryingToLogin)" Login " else " Register "
+
+    val annotedString = buildAnnotatedString {
+        append(initialText)
+        withStyle(style = SpanStyle(color = Bar_Color)){
+            pushStringAnnotation(tag = loginText, annotation = loginText)
+            append(loginText)
+        }
+
+    }
+
+    ClickableText(modifier = Modifier
+        .fillMaxWidth()
+        .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            textAlign = TextAlign.Center
+        ),
+        text = annotedString, onClick = {offset ->
+
+        annotedString.getStringAnnotations(offset,offset)
+            .firstOrNull()?.also {span->
+                Log.d("ClicableTextComponents", "{$span}")
+
+                if((span.item == loginText)){
+                    onTextSelected(span.item)
+
+                }
+            }
+    })
+
+}
+
+@Composable
+fun NormalTextComponent(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = colorResource(id = R.color.gray),
+        textAlign = TextAlign.Center,
+        textDecoration = TextDecoration.Underline
+    )
+}
+
 
 @Preview
 @Composable
