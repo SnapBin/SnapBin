@@ -9,6 +9,8 @@ class LoginViewModel: ViewModel() {
     private val  TAG = LoginViewModel::class.simpleName
     var registrationUIState = mutableStateOf(RegistrationUIState())
 
+    var allValidationsPassed = mutableStateOf(false)
+
     fun onEvent(event:UIEvent){
         when(event){
             is UIEvent.FirstNameChanged -> {
@@ -38,6 +40,13 @@ class LoginViewModel: ViewModel() {
             is UIEvent.PasswordChanged -> {
                 registrationUIState.value = registrationUIState.value.copy(
                     password = event.password
+                )
+                validateDataWithRules()
+                printState()
+            }
+            is UIEvent.ConfirmPasswordChanged -> {
+                registrationUIState.value = registrationUIState.value.copy(
+                    confirmPassword = event.confirmPasswordChanged
                 )
                 validateDataWithRules()
                 printState()
@@ -72,19 +81,36 @@ class LoginViewModel: ViewModel() {
         val passwordResult = Validator.validatePassword(
             password = registrationUIState.value.password
         )
+        val confirmPasswordResult = Validator.validateConfirmPassword(
+            password = registrationUIState.value.password,
+            confirmPassword = registrationUIState.value.confirmPassword
+        )
+
+
 
         Log.d(TAG, "INsidevalidator")
         Log.d(TAG, "fNameResult = $fNameResult")
         Log.d(TAG, "lNameResult = $lNameResult")
         Log.d(TAG, "emailResult = $emailResult")
         Log.d(TAG, "passwordResult = $passwordResult")
+        Log.d(TAG, "confirmPasswordResult = $confirmPasswordResult")
 
         registrationUIState.value = registrationUIState.value.copy(
             firstNameError = fNameResult.status,
             lastNameError = lNameResult.status,
             emailError = emailResult.status,
-            passwordError = passwordResult.status
+            passwordError = passwordResult.status,
+            confirmPasswordChangedError = confirmPasswordResult.status
         )
+
+        if (fNameResult.status && lNameResult.status && emailResult.status && passwordResult.status && confirmPasswordResult.status)
+        {
+            allValidationsPassed.value = true
+        }
+        else
+        {
+            allValidationsPassed.value = false
+        }
 
     }
 

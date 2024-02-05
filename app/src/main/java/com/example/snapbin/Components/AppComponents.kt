@@ -190,6 +190,50 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector,
 }
 
 @Composable
+fun ConfirmPasswordFieldComponent(
+    labelValue: String,
+    imageVector: ImageVector,
+    onTextSelected: (String) -> Unit,
+    errorStatus: Boolean = false
+) {
+    val localFocusManager = LocalFocusManager.current
+    val confirmPassword = remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        label = { Text(text = labelValue) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Bar_Color,
+            focusedLabelColor = Bar_Color,
+            cursorColor = Bar_Color,
+            backgroundColor = Bar_Color
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        singleLine = true,
+        keyboardActions = KeyboardActions {
+            localFocusManager.clearFocus()
+        },
+        maxLines = 1,
+        value = confirmPassword.value,
+        onValueChange = {
+            confirmPassword.value = it
+            onTextSelected(it)
+        },
+        leadingIcon = {
+            Icon(imageVector = imageVector, contentDescription = "")
+        },
+        visualTransformation = PasswordVisualTransformation(),
+        isError = !errorStatus
+    )
+}
+
+
+@Composable
 fun CheckboxComponents (value: String, onTextSelected: (String) -> Unit) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -245,7 +289,7 @@ fun ClicableTextComponents(value: String, onTextSelected: (String) -> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String, onButtonClicked : ()-> Unit){
+fun ButtonComponent(value: String, onButtonClicked : ()-> Unit, isEnabled : Boolean = false){
     Button(
         onClick = {
                   onButtonClicked.invoke()
@@ -255,7 +299,8 @@ fun ButtonComponent(value: String, onButtonClicked : ()-> Unit){
             .heightIn(0.dp)
             .padding(15.dp),
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent)
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        enabled = isEnabled
 
     ) {
         Box(modifier = Modifier

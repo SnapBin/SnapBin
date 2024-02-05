@@ -64,12 +64,12 @@ fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()) {
                 errorStatus = loginViewModel.registrationUIState.value.passwordError
             )
 
-            PasswordFieldComponent(labelValue = stringResource(R.string.Re_confirm), imageVector = Icons.Default.Lock,
+            ConfirmPasswordFieldComponent(labelValue = stringResource(R.string.Re_confirm), imageVector = Icons.Default.Lock,
                 onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
+                    loginViewModel.onEvent(UIEvent.ConfirmPasswordChanged(it))
 
                 },
-                errorStatus = loginViewModel.registrationUIState.value.passwordError
+                errorStatus = loginViewModel.registrationUIState.value.confirmPasswordChangedError
             )
             
             CheckboxComponents(value = stringResource(R.string.Terms_and_condition), onTextSelected = {
@@ -80,7 +80,8 @@ fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()) {
             ButtonComponent(value = stringResource(R.string.Sign_in),
                 onButtonClicked = {
                     loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
-                }
+                },
+                isEnabled = loginViewModel.allValidationsPassed.value
             )
 
             DividerTextComponent()
