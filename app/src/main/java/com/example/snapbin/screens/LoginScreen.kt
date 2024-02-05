@@ -16,14 +16,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.snapbin.Components.*
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.Navigation.SystemBackButtonHandler
 import com.example.snapbin.R
+import com.example.snapbin.data.LoginViewModel
+import com.example.snapbin.data.UIEvent
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -36,13 +39,23 @@ fun LoginScreen() {
             NormalTextComponents(value = stringResource(R.string.Title))
             WelcomeComponent(value = "Welcome Back")
 
-            MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Mail)
+            MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Mail,
+                onTextSelected = {
+                loginViewModel.onEvent(UIEvent.EmailChanged(it))
+            })
 
-            PasswordFieldComponent(labelValue = "Password", imageVector = Icons.Default.Lock)
+            PasswordFieldComponent(labelValue = "Password", imageVector = Icons.Default.Lock,
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
+
+                })
             Spacer(modifier = Modifier.height(10.dp))
             NormalTextComponent(value = stringResource(R.string.Forgot_your_Passsword))
             Spacer(modifier = Modifier.height(10.dp))
-            ButtonComponent(value = "Login")
+            ButtonComponent(value = "Login",
+                onButtonClicked = {
+                    loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
+                })
 //            Spacer(modifier = Modifier.height(40.dp))
             DividerTextComponent()
 

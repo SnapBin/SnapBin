@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "229449725620",
+    "project_id": "snapbin-4f196",
+    "storage_bucket": "snapbin-4f196.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229449725620:android:ad71e11d78f0a39688c9e1",
+        "android_client_info": {
+          "package_name": "com.example.snapbin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229449725620-40vd7cd4eaqh8jcbk65jpcfo9ah6a351.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASk6WZEHOj_tD9g1zCMGRcsgg0vr6UKfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229449725620-40vd7cd4eaqh8jcbk65jpcfo9ah6a351.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,8 +9,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.SnackbarDefaults.backgroundColor
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -86,7 +85,11 @@ fun WelcomeComponent(value: String) {
 }
 
 @Composable
-fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector){
+fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector,
+                         onTextSelected: (String) -> Unit,
+                         errorStatus: Boolean = false
+
+                         ){
     val textValue = remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -108,18 +111,22 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector){
         value = textValue.value,
         onValueChange = {
             textValue.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon( imageVector = imageVector, contentDescription = ""
             )
         },
+        isError = !errorStatus
 
     )
 
 }
 
 @Composable
-fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
+fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector,
+                           onTextSelected: (String) -> Unit,
+                           errorStatus: Boolean = false){
     val locakFocusManager = LocalFocusManager.current
     val password = remember { mutableStateOf("") }
 
@@ -144,6 +151,7 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
         value = password.value,
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon( imageVector = imageVector, contentDescription = ""
@@ -175,7 +183,8 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector ){
         }
         else {
             PasswordVisualTransformation()
-        }
+        },
+        isError = !errorStatus
     )
 
 }
@@ -236,9 +245,11 @@ fun ClicableTextComponents(value: String, onTextSelected: (String) -> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String){
+fun ButtonComponent(value: String, onButtonClicked : ()-> Unit){
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+                  onButtonClicked.invoke()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(0.dp)
