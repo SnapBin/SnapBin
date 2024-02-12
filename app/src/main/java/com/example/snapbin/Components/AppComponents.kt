@@ -10,8 +10,11 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.TopAppBarDefaults
@@ -49,13 +52,14 @@ import com.example.snapbin.ui.theme.Bar_Color
 import com.example.snapbin.ui.theme.GrayColor
 import com.example.snapbin.ui.theme.TextColor
 import com.example.snapbin.ui.theme.TopGreen
+import com.example.snapbin.ui.theme.whiteColor
 
 @Composable
 fun NormalTextComponents(value: String) {
 
     TopAppBar (
-        modifier = Modifier.height(75.dp),
-        backgroundColor = Color.Blue,
+        modifier = Modifier.height(70.dp),
+        backgroundColor = MaterialTheme.colors.primaryVariant,
         title = {
             Text(
             text="SnapBin",
@@ -356,7 +360,8 @@ fun DividerTextComponent() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Divider(modifier = Modifier
-            .fillMaxWidth().padding(10.dp)
+            .fillMaxWidth()
+            .padding(10.dp)
             .weight(1f),
 
         color = GrayColor,
@@ -427,8 +432,30 @@ fun NormalTextComponent(value: String) {
 }
 
 @Composable
-fun AppToolbar(toolbarTitle: String){
-    
+fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit){
+    TopAppBar(
+        title = {
+            NormalTextComponents(value = toolbarTitle)
+        },
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Filled.Menu,
+                contentDescription = "Menu",
+                tint = whiteColor
+            )
+        },
+        actions = {
+            IconButton(onClick = {
+                logoutButtonClicked()
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.Logout,
+                    contentDescription = stringResource(id = R.string.logout)
+                )
+            }
+        }
+
+    )
 }
 
 
