@@ -2,6 +2,7 @@ package com.example.snapbin.Components
 
 
 import android.util.Log
+import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.TextToolbar
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -196,6 +198,7 @@ fun ConfirmPasswordFieldComponent(
     onTextSelected: (String) -> Unit,
     errorStatus: Boolean = false
 ) {
+    val passwordVisible = remember { mutableStateOf(false) }
     val localFocusManager = LocalFocusManager.current
     val confirmPassword = remember { mutableStateOf("") }
 
@@ -223,18 +226,44 @@ fun ConfirmPasswordFieldComponent(
         onValueChange = {
             confirmPassword.value = it
             onTextSelected(it)
+        }, leadingIcon = {
+            Icon( imageVector = imageVector, contentDescription = ""
+            )
         },
-        leadingIcon = {
-            Icon(imageVector = imageVector, contentDescription = "")
+        trailingIcon = {
+            val iconImage = if (passwordVisible.value) {
+                Icons.Filled.Visibility
+            }
+            else {
+                Icons.Filled.VisibilityOff
+            }
+
+            var description = if (passwordVisible.value) {
+                stringResource(R.string.Hide_password)
+            }
+            else {
+                stringResource(R.string.Show_Password)
+            }
+            IconButton(onClick = { passwordVisible.value = !passwordVisible.value}) {
+                Icon(imageVector = iconImage, contentDescription = description)
+
+            }
+
         },
-        visualTransformation = PasswordVisualTransformation(),
+
+        visualTransformation = if (passwordVisible.value) {
+            VisualTransformation.None
+        }
+        else {
+            PasswordVisualTransformation()
+        },
         isError = !errorStatus
     )
 }
 
 
 @Composable
-fun CheckboxComponents (value: String, onTextSelected: (String) -> Unit) {
+fun CheckboxComponents (value: String, onTextSelected: (String) -> Unit, onCheckedChange: (Boolean) -> Unit) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .heightIn(50.dp)
@@ -247,6 +276,7 @@ fun CheckboxComponents (value: String, onTextSelected: (String) -> Unit) {
         Checkbox(checked = checkState.value,
             onCheckedChange = {
                 checkState.value != checkState.value
+                onCheckedChange.invoke(it)
             })
         ClicableTextComponents(value = value, onTextSelected)
 
@@ -394,6 +424,11 @@ fun NormalTextComponent(value: String) {
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.Underline
     )
+}
+
+@Composable
+fun AppToolbar(toolbarTitle: String){
+    
 }
 
 

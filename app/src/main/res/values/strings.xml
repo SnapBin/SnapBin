@@ -15,4 +15,6 @@
     <string name="WelcomeLogin">Welcome</string>
     <string name="Forgot_your_Passsword">Forgot your Password?</string>
     <string name="Welcome_Back">Welcome Back</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
 </resources>

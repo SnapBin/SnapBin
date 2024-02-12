@@ -38,6 +38,12 @@ object Validator {
 
         )
     }
+
+    fun validatePrivacyPolicyAcceptance(statusValue:Boolean):ValidationResult{
+        return ValidationResult(
+            statusValue
+        )
+    }
 }
 
 data class ValidationResult(
