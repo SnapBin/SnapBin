@@ -539,7 +539,7 @@ fun NavigationItemRow(item: NavigationItem,
 
         Spacer(modifier = Modifier.width(25.dp))
 
-        NavigationDrawerText(title = item.title, 30.sp, nav_bar)
+        NavigationDrawerText(title = item.title, 20.sp, nav_bar)
 
 
     }
