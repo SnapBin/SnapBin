@@ -1,10 +1,11 @@
-package com.example.snapbin.data
+package com.example.snapbin.data.signup
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
+import com.example.snapbin.data.RegistrationUIState
 import com.example.snapbin.data.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
@@ -17,7 +18,7 @@ class SignUpViewModel: ViewModel() {
 
     var signUpInProgress = mutableStateOf(false)
 
-    fun onEvent(event:SignUpUIEvent){
+    fun onEvent(event: SignUpUIEvent){
         when(event){
             is SignUpUIEvent.FirstNameChanged -> {
                 registrationUIState.value = registrationUIState.value.copy(
@@ -161,23 +162,7 @@ class SignUpViewModel: ViewModel() {
             }
     }
 
-    fun logout(){
-        val firebaseAuth = FirebaseAuth.getInstance()
 
-        firebaseAuth.signOut()
-
-        val authStateListener = AuthStateListener{
-            if(it.currentUser == null){
-                Log.d(TAG, "Inside sign outsuccess")
-                SnapBinAppRoute.navigateTo(Screen.LoginScreen)
-            }
-            else
-            {
-                Log.d(TAG, "Inside sign out is not completed")
-            }
-        }
-        firebaseAuth.addAuthStateListener(authStateListener)
-    }
 
 
 }

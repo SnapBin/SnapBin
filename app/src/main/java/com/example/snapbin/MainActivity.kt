@@ -9,21 +9,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.snapbin.app.SnapBinapp
 import com.example.snapbin.screens.SignUpScreen
+import com.example.snapbin.ui.theme.SnapBinTheme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SnapBinapp()
+            SnapBinTheme {
+                SnapBinapp()
+
+            }
         }
     }
 }
-
 
 @Preview
 @Composable
 fun `DefaultView-ofSignupScreen`() {
     SnapBinapp()
 }
-

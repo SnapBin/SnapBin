@@ -1,13 +1,10 @@
-package com.example.snapbin
+package com.example.snapbin.data.login
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
-import com.example.snapbin.data.LoginUIEvent
-import com.example.snapbin.data.LoginUIState
-import com.example.snapbin.data.SignUpViewModel
 import com.example.snapbin.data.rules.Validator
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,7 +17,7 @@ class LoginViewModel : ViewModel(){
 
     var loginInProgress = mutableStateOf(false)
 
-    fun onEvent(event:LoginUIEvent){
+    fun onEvent(event: LoginUIEvent){
         when(event){
             is LoginUIEvent.EmailChanged -> {
                 loginUIState.value = loginUIState.value.copy(

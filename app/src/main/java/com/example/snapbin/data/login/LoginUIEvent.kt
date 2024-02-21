@@ -1,4 +1,4 @@
-package com.example.snapbin.data
+package com.example.snapbin.data.login
 
 sealed class LoginUIEvent {
 

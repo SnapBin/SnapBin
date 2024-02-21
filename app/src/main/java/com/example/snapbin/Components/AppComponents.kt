@@ -4,7 +4,10 @@ package com.example.snapbin.Components
 import android.util.Log
 import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,6 +16,7 @@ import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Visibility
@@ -24,9 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Yellow
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.TextToolbar
@@ -45,13 +51,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.snapbin.R
+import com.example.snapbin.data.NavigationItem
 import com.example.snapbin.ui.theme.Bar_Color
 import com.example.snapbin.ui.theme.GrayColor
+import com.example.snapbin.ui.theme.Primary
+import com.example.snapbin.ui.theme.Secondary
 import com.example.snapbin.ui.theme.TextColor
 import com.example.snapbin.ui.theme.TopGreen
+import com.example.snapbin.ui.theme.nav_bar
 import com.example.snapbin.ui.theme.whiteColor
 
 @Composable
@@ -432,29 +443,123 @@ fun NormalTextComponent(value: String) {
 }
 
 @Composable
-fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit){
-    TopAppBar(
+fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit, navigationIconClicked: () -> Unit){
+
+    TopAppBar (
+        modifier = Modifier.height(70.dp),
+        backgroundColor = MaterialTheme.colors.primaryVariant,
         title = {
-            NormalTextComponents(value = toolbarTitle)
-        },
-        navigationIcon = {
-            Icon(
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "Menu",
-                tint = whiteColor
+            Text(
+                text="SnapBin",
+                fontSize = 32.sp ,
+                fontWeight= FontWeight.Medium,
+                color= Color.Black,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
+
+        },
+//        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Yellow)
+        navigationIcon = {
+            IconButton(onClick = {
+                navigationIconClicked.invoke() }) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = stringResource(R.string.menu),
+                    tint = whiteColor
+                )
+                
+            }
+
         },
         actions = {
             IconButton(onClick = {
                 logoutButtonClicked()
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Logout,
+                    imageVector = Icons.AutoMirrored.Filled.Logout,
                     contentDescription = stringResource(id = R.string.logout)
                 )
             }
         }
 
+    )
+}
+@Composable
+fun NavigationDrawerHeader(value: String?) {
+    Box(
+        modifier = Modifier
+            .background(
+                Brush.horizontalGradient(
+                    listOf(nav_bar, nav_bar)
+                )
+            )
+            .fillMaxWidth()
+            .height(180.dp)
+            .padding(32.dp)
+    ) {
+
+        NavigationDrawerText(
+            title = value?:stringResource(R.string.navigation_header), 28.sp , nav_bar
+        )
+
+    }
+}
+
+@Composable
+fun NavigationDrawerBody(navigationDrawerItems: List<NavigationItem>,
+                         onNavigationItemClicked:(NavigationItem) -> Unit) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+
+        items(navigationDrawerItems) {
+            NavigationItemRow(item = it,onNavigationItemClicked)
+        }
+
+    }
+}
+
+@Composable
+fun NavigationItemRow(item: NavigationItem,
+                      onNavigationItemClicked:(NavigationItem) -> Unit)
+{
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onNavigationItemClicked.invoke(item)
+            }
+            .padding(all = 20.dp)
+    ) {
+
+        Icon(
+            imageVector = item.icon,
+            contentDescription = item.description,
+        )
+
+        Spacer(modifier = Modifier.width(25.dp))
+
+        NavigationDrawerText(title = item.title, 30.sp, nav_bar)
+
+
+    }
+}
+
+@Composable
+fun NavigationDrawerText(title: String, textUnit: TextUnit, color: Color) {
+
+    val shadowOffset = Offset(1f, 3f)
+
+    Text(
+        text = title, style = TextStyle(
+            color = Color.White,
+            fontSize = textUnit,
+            fontStyle = FontStyle.Normal,
+            shadow = Shadow(
+                color = nav_bar,
+                offset = shadowOffset, 2f
+            )
+        )
     )
 }
 

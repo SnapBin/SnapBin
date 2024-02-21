@@ -17,4 +17,8 @@
     <string name="Welcome_Back">Welcome Back</string>
     <string name="home">Home</string>
     <string name="logout">Logout</string>
+    <string name= "GoogleAPIKey">AIzaSyChKxSb-qJD2M92f7aDoj_I9fWeoxAgf5o</string>
+    <string name="navigation_header">Navigation Header\n</string>
+    <string name="menu">Menu</string>
+
 </resources>

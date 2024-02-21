@@ -1,4 +1,4 @@
-package com.example.snapbin.data
+package com.example.snapbin.data.signup
 
 sealed class SignUpUIEvent {
     data class FirstNameChanged(val firstName: String) : SignUpUIEvent()

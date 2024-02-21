@@ -11,15 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.snapbin.Components.*
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.R
-import com.example.snapbin.data.SignUpViewModel
-import com.example.snapbin.data.SignUpUIEvent
+import com.example.snapbin.data.signup.SignUpViewModel
+import com.example.snapbin.data.signup.SignUpUIEvent
 
 @Composable
 fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
@@ -116,8 +115,3 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
 
 }
 
-@Preview
-@Composable
-fun DefaultViewofSignupScreen() {
-    SignUpScreen()
-}

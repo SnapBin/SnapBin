@@ -21,7 +21,7 @@ fun SnapBinapp()
         color = Color.White
     )
     {
-        Crossfade(targetState = SnapBinAppRoute.currentScreen) { currentState ->
+        Crossfade(targetState = SnapBinAppRoute.currentScreen, label = "") { currentState ->
             when (currentState.value) {
                 is Screen.SignUpScreen -> {
                     SignUpScreen()
