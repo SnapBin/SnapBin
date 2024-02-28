@@ -2,7 +2,10 @@ package com.example.snapbin.data.signup
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.data.RegistrationUIState
@@ -11,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 
 class SignUpViewModel: ViewModel() {
+    private val _navigateToHomeScreen = MutableLiveData<Boolean>()
+    val navigateToHomeScreen: LiveData<Boolean>
+        get() = _navigateToHomeScreen
     private val  TAG = SignUpViewModel::class.simpleName
     var registrationUIState = mutableStateOf(RegistrationUIState())
 
@@ -149,7 +155,7 @@ class SignUpViewModel: ViewModel() {
 
                 signUpInProgress.value= false
                 if(it.isSuccessful){
-                    SnapBinAppRoute.navigateTo(Screen.HomeScreen)
+                    _navigateToHomeScreen.value = true
                 }
             }
 

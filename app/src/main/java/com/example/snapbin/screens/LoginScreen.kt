@@ -19,17 +19,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.snapbin.Components.*
-import com.example.snapbin.data.login.LoginViewModel
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
-import com.example.snapbin.Navigation.SystemBackButtonHandler
+//import com.example.snapbin.Navigation.SystemBackButtonHandler
 import com.example.snapbin.R
 import com.example.snapbin.data.login.LoginUIEvent
+import com.example.snapbin.data.login.LoginViewModel
+import okhttp3.Route
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel = viewModel()) {
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center)
     {
@@ -64,7 +68,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(10.dp))
                 ButtonComponent(value = "Login",
                     onButtonClicked = {
-                                      loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
+                        loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
+                        navController.navigate(Routes.HOME_SCREEN)
                     },
                     isEnabled = loginViewModel.allValidationsPassed.value
 
@@ -73,7 +78,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 DividerTextComponent()
 
                 ClicableLoginTextComponents(tryingToLogin = false, onTextSelected = {
-                    SnapBinAppRoute.navigateTo(Screen.SignUpScreen)
+                    navController.navigate(Routes.SIGNUP_SCREEN)
 
                 })
             }
@@ -85,9 +90,9 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         }
 
     }
-    SystemBackButtonHandler {
-        SnapBinAppRoute.navigateTo(Screen.SignUpScreen)
-    }
+//    SystemBackButtonHandler {
+//        navController.navigate(Routes.SIGNUP_SCREEN)
+//    }
 
 }
 

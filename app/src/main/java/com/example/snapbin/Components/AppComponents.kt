@@ -73,13 +73,13 @@ fun NormalTextComponents(value: String) {
         backgroundColor = MaterialTheme.colors.primaryVariant,
         title = {
             Text(
-            text="SnapBin",
-            fontSize = 32.sp ,
-            fontWeight= FontWeight.Medium,
-            color= Color.Black,
-            modifier = Modifier
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
+                text="SnapBin",
+                fontSize = 32.sp ,
+                fontWeight= FontWeight.Medium,
+                color= Color.Black,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
             )
 
         },
@@ -106,7 +106,7 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector,
                          onTextSelected: (String) -> Unit,
                          errorStatus: Boolean = false
 
-                         ){
+){
     val textValue = remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -190,7 +190,7 @@ fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector,
             }
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value}) {
                 Icon(imageVector = iconImage, contentDescription = description)
-                
+
             }
 
         },
@@ -337,7 +337,7 @@ fun ClicableTextComponents(value: String, onTextSelected: (String) -> Unit){
 fun ButtonComponent(value: String, onButtonClicked : ()-> Unit, isEnabled : Boolean = false){
     Button(
         onClick = {
-                  onButtonClicked.invoke()
+            onButtonClicked.invoke()
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -375,9 +375,9 @@ fun DividerTextComponent() {
             .padding(10.dp)
             .weight(1f),
 
-        color = GrayColor,
-        thickness = 1.dp)
-    
+            color = GrayColor,
+            thickness = 1.dp)
+
         Text(modifier = Modifier.padding(8.dp), text = "or", fontSize = 18.sp, color = TextColor)
         Divider(modifier = Modifier
             .fillMaxWidth()
@@ -412,16 +412,16 @@ fun ClicableLoginTextComponents(tryingToLogin: Boolean = true, onTextSelected: (
         ),
         text = annotedString, onClick = {offset ->
 
-        annotedString.getStringAnnotations(offset,offset)
-            .firstOrNull()?.also {span->
-                Log.d("ClicableTextComponents", "{$span}")
+            annotedString.getStringAnnotations(offset,offset)
+                .firstOrNull()?.also {span->
+                    Log.d("ClicableTextComponents", "{$span}")
 
-                if((span.item == loginText)){
-                    onTextSelected(span.item)
+                    if((span.item == loginText)){
+                        onTextSelected(span.item)
 
+                    }
                 }
-            }
-    })
+        })
 
 }
 
@@ -469,7 +469,7 @@ fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit, navigation
                     contentDescription = stringResource(R.string.menu),
                     tint = whiteColor
                 )
-                
+
             }
 
         },

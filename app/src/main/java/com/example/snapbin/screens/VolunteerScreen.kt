@@ -1,20 +1,25 @@
 package com.example.snapbin.screens
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.snapbin.Components.AppToolbar
 import com.example.snapbin.Components.NavigationDrawerBody
 import com.example.snapbin.Components.NavigationDrawerHeader
@@ -22,14 +27,17 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import kotlinx.coroutines.launch
-import okhttp3.Route
+
+//import androidx.navigation.NavController
+
 
 @Composable
-fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = viewModel()) {
+fun VolunteerScreen(navController: NavHostController,homeViewModel: HomeViewModel = viewModel()) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     homeViewModel.getUserData()
+    // Create an instance of MapState with lastKnownLocation as null initially
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -62,7 +70,7 @@ fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = v
                 })
         }
 
-    ) { paddingValues ->
+    ){ paddingValues ->
 
         Surface(
             color = Color.White,
@@ -72,7 +80,6 @@ fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = v
                 .padding(paddingValues)
         ) {
 
-        }
-
     }
+}
 }

@@ -7,8 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
+import com.example.snapbin.Navigation.SnapBinNavigationGraph
 import com.example.snapbin.data.home.HomeViewModel
 import com.example.snapbin.screens.HomeScreen
 import com.example.snapbin.screens.LoginScreen
@@ -23,26 +26,9 @@ fun SnapBinapp(homeViewModel: HomeViewModel = viewModel())
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ){
-        if(homeViewModel.isUserLoggedIn.value ==true){
-            SnapBinAppRoute.navigateTo(Screen.HomeScreen)
-        }
-        Crossfade(targetState = SnapBinAppRoute.currentScreen, label = "") { currentState ->
-            when (currentState.value) {
-                is Screen.SignUpScreen -> {
-                    SignUpScreen()
-                }
-
-                is Screen.TermsandConditionsScreen -> {
-                    TermsandConditionsScreen()
-                }
-                is Screen.LoginScreen -> {
-                    LoginScreen()
-                }
-                is Screen.HomeScreen -> {
-                    HomeScreen()
-                }
-            }
-
-        }
+//        if(homeViewModel.isUserLoggedIn.value ==true){
+//            navController.navigate(Routes.HOME_SCREEN)
+//        }
+        SnapBinNavigationGraph()
     }
 }

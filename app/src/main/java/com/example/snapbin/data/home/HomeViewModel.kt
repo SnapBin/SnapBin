@@ -8,6 +8,8 @@ import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.VolunteerActivism
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.data.NavigationItem
@@ -44,7 +46,7 @@ class HomeViewModel: ViewModel() {
     )
     val isUserLoggedIn: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun logout(){
+    fun logout(navController: NavHostController){
         val firebaseAuth = FirebaseAuth.getInstance()
 
         firebaseAuth.signOut()
@@ -52,7 +54,7 @@ class HomeViewModel: ViewModel() {
         val authStateListener = FirebaseAuth.AuthStateListener {
             if (it.currentUser == null) {
                 Log.d(TAG, "Inside sign outsuccess")
-                SnapBinAppRoute.navigateTo(Screen.LoginScreen)
+                navController.navigate(Routes.LOGIN_SCREEN)
             } else {
                 Log.d(TAG, "Inside sign out is not completed")
             }

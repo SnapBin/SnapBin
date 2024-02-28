@@ -13,15 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.snapbin.Components.*
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.Navigation.Screen
 import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.R
-import com.example.snapbin.data.signup.SignUpViewModel
 import com.example.snapbin.data.signup.SignUpUIEvent
+import com.example.snapbin.data.signup.SignUpViewModel
 
 @Composable
-fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
+fun SignUpScreen(navController: NavHostController, signUpViewModel : SignUpViewModel = viewModel()) {
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center)
     {
@@ -78,7 +80,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
 
                 CheckboxComponents(value = stringResource(R.string.Terms_and_condition),
                     onTextSelected = {
-                        SnapBinAppRoute.navigateTo(Screen.TermsandConditionsScreen)
+                        navController.navigate(Routes.TERMS_AND_CONDITIONS_SCREEN)
 
                     },
                     onCheckedChange = {
@@ -90,6 +92,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
                 ButtonComponent(value = stringResource(R.string.Sign_in),
                     onButtonClicked = {
                         signUpViewModel.onEvent(SignUpUIEvent.RegisterButtonClicked)
+                        navController.navigate(Routes.HOME_SCREEN)
                     },
                     isEnabled = signUpViewModel.allValidationsPassed.value
                 )
@@ -98,9 +101,10 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 ClicableLoginTextComponents(tryingToLogin = true, onTextSelected = {
-                    SnapBinAppRoute.navigateTo((Screen.LoginScreen))
+                    navController.navigate(Routes.LOGIN_SCREEN)
 
                 })
+
 
             }
 

@@ -1,12 +1,12 @@
-package com.example.snapbin.screens
+package com.example.snapbin.data
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.snapbin.Components.AppToolbar
 import com.example.snapbin.Components.NavigationDrawerBody
 import com.example.snapbin.Components.NavigationDrawerHeader
@@ -22,14 +21,14 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import kotlinx.coroutines.launch
-import okhttp3.Route
 
 @Composable
-fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = viewModel()) {
+fun NavigationDrawer(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()){
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     homeViewModel.getUserData()
+    // Create an instance of MapState with lastKnownLocation as null initially
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -62,7 +61,7 @@ fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = v
                 })
         }
 
-    ) { paddingValues ->
+    ){paddingValues ->
 
         Surface(
             color = Color.White,
@@ -70,7 +69,7 @@ fun HomeScreen(navController: NavHostController,homeViewModel: HomeViewModel = v
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(paddingValues)
-        ) {
+        ){
 
         }
 
