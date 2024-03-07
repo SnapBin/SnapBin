@@ -1,6 +1,5 @@
 package com.example.snapbin.data
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -53,6 +52,7 @@ fun NavigationDrawer(navController: NavHostController, homeViewModel: HomeViewMo
                         "volunteerScreen" -> navController.navigate(Routes.VOLUNTEER_SCREEN)
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
+                        "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()

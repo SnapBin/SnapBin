@@ -1,28 +1,29 @@
+// HomeViewModel.kt
 package com.example.snapbin.data.home
 
+import android.location.Location
 import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.VolunteerActivism
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.snapbin.Navigation.Routes
-import com.example.snapbin.Navigation.Screen
-import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.data.NavigationItem
 import com.google.firebase.auth.FirebaseAuth
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
     private val TAG = HomeViewModel::class.simpleName
 
     val navigationItemsList = listOf<NavigationItem>(
         NavigationItem(
             title = "Home",
             icon = Icons.Default.Home,
-            description = "Home SCreen",
+            description = "Home Screen",
             itemId = "homeScreen"
         ),
         NavigationItem(
@@ -43,17 +44,25 @@ class HomeViewModel: ViewModel() {
             description = "Account Screen",
             itemId = "accountScreen"
         ),
+        NavigationItem(
+            title = "Map",
+            icon = Icons.Default.Map,
+            description = "Map Screen",
+            itemId = "mapScreen"
+
+        )
     )
+
     val isUserLoggedIn: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun logout(navController: NavHostController){
+    fun logout(navController: NavHostController) {
         val firebaseAuth = FirebaseAuth.getInstance()
 
         firebaseAuth.signOut()
 
         val authStateListener = FirebaseAuth.AuthStateListener {
             if (it.currentUser == null) {
-                Log.d(TAG, "Inside sign outsuccess")
+                Log.d(TAG, "Inside sign out success")
                 navController.navigate(Routes.LOGIN_SCREEN)
             } else {
                 Log.d(TAG, "Inside sign out is not completed")
@@ -72,9 +81,7 @@ class HomeViewModel: ViewModel() {
         }
     }
 
-
     val emailId: MutableLiveData<String> = MutableLiveData()
-
 
     fun getUserData() {
         FirebaseAuth.getInstance().currentUser?.also {
@@ -84,4 +91,9 @@ class HomeViewModel: ViewModel() {
         }
     }
 
+    val currentLocation: MutableLiveData<Location> = MutableLiveData()
+
+    fun updateCurrentLocation(location: Location) {
+        currentLocation.value = location
+    }
 }

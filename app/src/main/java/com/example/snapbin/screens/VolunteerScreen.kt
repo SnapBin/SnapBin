@@ -1,12 +1,9 @@
-package com.example.snapbin.screens
-
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -17,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.snapbin.Components.AppToolbar
@@ -28,20 +25,18 @@ import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import kotlinx.coroutines.launch
 
-//import androidx.navigation.NavController
-
-
 @Composable
-fun VolunteerScreen(navController: NavHostController,homeViewModel: HomeViewModel = viewModel()) {
+fun VolunteerScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     homeViewModel.getUserData()
-    // Create an instance of MapState with lastKnownLocation as null initially
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            AppToolbar(toolbarTitle = stringResource(id = R.string.app_name),
+            AppToolbar(
+                toolbarTitle = stringResource(id = R.string.app_name),
                 logoutButtonClicked = {
                     homeViewModel.logout(navController)
                 },
@@ -55,8 +50,9 @@ fun VolunteerScreen(navController: NavHostController,homeViewModel: HomeViewMode
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
             NavigationDrawerHeader(homeViewModel.emailId.value)
-            NavigationDrawerBody(navigationDrawerItems = homeViewModel.navigationItemsList,
-                onNavigationItemClicked = {navigationItem ->
+            NavigationDrawerBody(
+                navigationDrawerItems = homeViewModel.navigationItemsList,
+                onNavigationItemClicked = { navigationItem ->
                     when (navigationItem.itemId) {
                         "homeScreen" -> navController.navigate(Routes.HOME_SCREEN)
                         "volunteerScreen" -> navController.navigate(Routes.VOLUNTEER_SCREEN)
@@ -66,12 +62,9 @@ fun VolunteerScreen(navController: NavHostController,homeViewModel: HomeViewMode
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()
                     }
-
                 })
         }
-
-    ){ paddingValues ->
-
+    ) { paddingValues ->
         Surface(
             color = Color.White,
             modifier = Modifier
@@ -79,7 +72,27 @@ fun VolunteerScreen(navController: NavHostController,homeViewModel: HomeViewMode
                 .background(Color.White)
                 .padding(paddingValues)
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Add the first clickable button
+                Button(onClick = {
+                    // Handle button click action
+                }) {
+                    Text(text = "Button 1")
+                }
 
+                // Add the second clickable button
+                Button(onClick = {
+                    // Handle button click action
+                }) {
+                    Text(text = "Button 2")
+                }
+            }
+        }
     }
-}
 }

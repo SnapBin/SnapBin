@@ -1,7 +1,6 @@
 package com.example.snapbin.Navigation
 
 object Routes {
-
     const val SIGNUP_SCREEN = "SIGNUP_SCREEN"
     const val LOGIN_SCREEN = "LOGIN_SCREEN"
     const val TERMS_AND_CONDITIONS_SCREEN = "TERMS_AND_CONDITIONS_SCREEN"
@@ -9,4 +8,6 @@ object Routes {
     const val REPORT_SCREEN = "REPORT_SCREEN"
     const val VOLUNTEER_SCREEN = "VOLUNTEER_SCREEN"
     const val ACCOUNT_SCREEN = "ACCOUNT_SCREEN"
+    const val MAP_SCREEN = "MAP_SCREEN"
+    const val CAMERA_SCREEN = "CAMERA_SCREEN"
 }
