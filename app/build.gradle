@@ -101,6 +101,8 @@ dependencies {
     implementation 'com.google.maps.android:maps-ktx:5.0.0'
     // KTX for the Maps SDK for Android Utility Library
     implementation 'com.google.maps.android:maps-utils-ktx:5.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.10.3'
 
     //Camera
     def camerax_version = "1.0.1"

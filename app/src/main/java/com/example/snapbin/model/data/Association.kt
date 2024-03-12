@@ -1,4 +1,4 @@
-package com.snaptrash.snaptrash.model.data
+package com.example.snapbin.model.data
 
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.PropertyName

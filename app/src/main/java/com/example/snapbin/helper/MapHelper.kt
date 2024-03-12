@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.scale
 import androidx.navigation.NavController
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.model.data.Snap
 import com.example.snapbin.model.data.SnapStatus
 import org.osmdroid.util.GeoPoint
@@ -23,6 +24,7 @@ class MapHelper{
                 }
                 marker.icon = ResourcesCompat.getDrawable(context.resources, kindIcon ,null)
                 marker.setOnMarkerClickListener{ marker: Marker, mapView: MapView ->
+                    navController.navigate(Routes.SINGLE_SNAP.replace("{snap}",snap.encodeForNavigation()))
                     true
                 }
                 val bitmap = (marker.icon as BitmapDrawable).bitmap

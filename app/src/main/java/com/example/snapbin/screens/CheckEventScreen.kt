@@ -1,9 +1,10 @@
+package com.example.snapbin.screens
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -26,7 +27,7 @@ import com.example.snapbin.data.home.HomeViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun VolunteerScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
+fun CheckEventScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -79,19 +80,7 @@ fun VolunteerScreen(navController: NavHostController, homeViewModel: HomeViewMod
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Add the first clickable button
-                Button(onClick = {
-                    navController.navigate(Routes.CHECK_EVENT)
-                }) {
-                    Text(text = "Check Event")
-                }
-
-                // Add the second clickable button
-                Button(onClick = {
-                    navController.navigate(Routes.CREATE_EVENT)
-                }) {
-                    Text(text = "Create an Event")
-                }
+                Text(text = "Check Event Screen")
             }
         }
     }

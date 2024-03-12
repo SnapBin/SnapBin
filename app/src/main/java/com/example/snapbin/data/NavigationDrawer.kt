@@ -53,6 +53,7 @@ fun NavigationDrawer(navController: NavHostController, homeViewModel: HomeViewMo
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
                         "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
+                        "listScreen" -> navController.navigate(Routes.ListSnapScreen)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()

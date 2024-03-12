@@ -86,6 +86,7 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
                         "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
+                        "listScreen" -> navController.navigate(Routes.ListSnapScreen)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()
@@ -106,8 +107,8 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
 
             Column(
                 modifier = Modifier.padding(20.dp),
-
-                ) {
+                )
+            {
                 Box(
                     Modifier
                         .height((configuration.screenHeightDp * 0.6).dp)

@@ -10,4 +10,8 @@ object Routes {
     const val ACCOUNT_SCREEN = "ACCOUNT_SCREEN"
     const val MAP_SCREEN = "MAP_SCREEN"
     const val CAMERA_SCREEN = "CAMERA_SCREEN"
+    const val SINGLE_SNAP = "snap/snap={snap}"
+    const val CREATE_EVENT = "CREATE_EVENT_SCREEN"
+    const val CHECK_EVENT = "CHECK_EVENT"
+    const val ListSnapScreen = "ListSnapScreen"
 }

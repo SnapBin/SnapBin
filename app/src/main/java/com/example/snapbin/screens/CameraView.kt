@@ -47,6 +47,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.snapbin.BuildConfig
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.model.CameraViewModel
 import com.example.snapbin.model.data.Snap
@@ -165,7 +166,7 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
                     ).build()
                     val adapter = moshi.adapter(Snap::class.java)
                     val snapJson = adapter.toJson(snap)
-//                    navController.navigate(MainAddressBook.SINGLE_SNAP.replace("{snap}",snapJson))
+                    navController.navigate(Routes.SINGLE_SNAP.replace("{snap}",snapJson))
                 },
                 modifier = Modifier
                     .width(150.dp)
