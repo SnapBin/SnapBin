@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.data.SnapImageDownloader
 import com.example.snapbin.model.MainNavViewModel
 import com.example.snapbin.model.SnapScreenViewModel
@@ -218,6 +219,13 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                 fontSize = 16.sp
             )
             Spacer(modifier = Modifier.height(25.dp))
+//            Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
+//                Text(text = "Map Screen")
+//            }
+
+            Button(onClick = { navController.navigate(Routes.SnapScreenInfo)}) {
+                Text(text = "Trash Info")
+            }
         }
     }
 }

@@ -14,4 +14,5 @@ object Routes {
     const val CREATE_EVENT = "CREATE_EVENT_SCREEN"
     const val CHECK_EVENT = "CHECK_EVENT"
     const val ListSnapScreen = "ListSnapScreen"
+    const val SnapScreenInfo = "SnapScreenInfo"
 }

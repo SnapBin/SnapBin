@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.snapbin.Components.AppToolbar
 import com.example.snapbin.Components.NavigationDrawerBody
 import com.example.snapbin.Components.NavigationDrawerHeader
@@ -54,9 +55,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel(), mainNavViewModel: MainNavViewModel = viewModel()) {
     val context = LocalContext.current
+    val vm = MainNavViewModel()
     val configuration = LocalConfiguration.current
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
     val locationEnabled = rememberPermissionState(permission = android.Manifest.permission.ACCESS_FINE_LOCATION)
+    val currentBackStack = navController.currentBackStackEntryAsState()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     homeViewModel.getUserData()
@@ -75,6 +78,11 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                 }
             )
         },
+//        floatingActionButton = {
+//            if(navController.currentBackStackEntryAsState().value?.destination?.route?.contains(Routes.SINGLE_SNAP) == true){
+//                vm.currentFloatingActionButton.value()
+//            }
+//        },
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
             NavigationDrawerHeader(homeViewModel.emailId.value)
@@ -189,7 +197,9 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                                 fontSize = 24.sp,
                                 lineHeight = 27.sp,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth().padding(5.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp)
                             )
                         }
                     }

@@ -21,6 +21,7 @@ import com.example.snapbin.screens.MapScreen
 import com.example.snapbin.screens.OpenSnapScreen
 import com.example.snapbin.screens.ReportScreen
 import com.example.snapbin.screens.SignUpScreen
+import com.example.snapbin.screens.SnapScreenInfo
 import com.example.snapbin.screens.TermsandConditionsScreen
 import com.example.snapbin.view.scaffolds.MainScaffold
 import com.squareup.moshi.Moshi
@@ -81,6 +82,10 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
             }
             composable(Routes.ListSnapScreen){
                 ListSnapScreen(mainNavViewModel.snapList,navController,false)
+            }
+
+            composable(Routes.SnapScreenInfo){
+                SnapScreenInfo(navController)
             }
         }
 
