@@ -85,7 +85,7 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
             }
 
             composable(Routes.SnapScreenInfo){
-                SnapScreenInfo(navController)
+                SnapScreenInfo(navController, viewModel())
             }
         }
 

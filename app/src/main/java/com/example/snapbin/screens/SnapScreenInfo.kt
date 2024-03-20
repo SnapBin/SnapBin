@@ -1,5 +1,6 @@
 package com.example.snapbin.screens
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,28 +17,41 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.snapbin.R
+import com.example.snapbin.model.SnapScreenViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SnapScreenInfo(navController: NavController) {
+fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewModel()) {
+    vm.navController = navController
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +82,19 @@ fun SnapScreenInfo(navController: NavController) {
                 R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue
             )
         )
-        Spacer(modifier = Modifier.height(16.dp)) // Add spacing between the two button sections
+        Spacer(modifier = Modifier.height(20.dp)) // Add spacing between the two button sections
+        DropDownBar()
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            content = {
+//                SaveButton(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)})
+                SaveButton {}
+                SendButton(onClick = { /* Handle Send button click */ })
+            }
+        )
 
     }
 }
@@ -193,15 +219,9 @@ fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: Lis
     }
 }
 
-
-
 @Composable
-fun GridButton(
-    selected: Boolean,
-    onClick: () -> Unit,
-    buttonText: String,
-    image: Int,
-    modifier: Modifier = Modifier
+fun GridButton(selected: Boolean, onClick: () -> Unit, buttonText: String, image: Int,
+               modifier: Modifier = Modifier
 ) {
     val buttonColor = Color(0xFF52B69A)
     val borderColor = if (selected) Color.Blue else Color.Transparent
@@ -232,9 +252,112 @@ fun GridButton(
         )
     }
 }
-@Preview
+
+
 @Composable
-fun PreviewSnapScreenInfo() {
-    val navController = rememberNavController()
-    SnapScreenInfo(navController = navController)
+fun DropDownBar() {
+    val auth = FirebaseAuth.getInstance()
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf("") }
+    var errorText by remember { mutableStateOf("") }
+
+    val options = listOf("User Info", "Anonymous")
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color(0xFF52B69A), shape = RoundedCornerShape(4.dp))
+                .clickable(onClick = { expanded = true })
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+        ) {
+            Text(
+                text = if (selectedOption.isEmpty()) "Select an option" else selectedOption,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clip(RoundedCornerShape(50))
+            )
+            if (errorText.isNotEmpty()) {
+                Text(
+                    text = errorText,
+                    color = Color.Red,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
+            }
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .background(
+                    color = Color(0xFF52B69A),
+                    shape = RoundedCornerShape(4.dp)
+                ) // Set background color same as dropdown bar
+                .padding(start = 16.dp) // Adjust the padding to align with the dropdown bar
+        ) {
+            options.forEach { item ->
+                DropdownMenuItem(onClick = {
+                    selectedOption = item
+                    expanded = false
+                }) {
+                    if (item == "User Info" && auth.currentUser != null) {
+                        val user = auth.currentUser
+                        Text(
+                            text = "Logged in as: ${user?.displayName ?: user?.email}",
+                            color = Color.White,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clip(RoundedCornerShape(50))
+                        )
+                    } else {
+                        Text(
+                            text = item,
+                            color = Color.White,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clip(RoundedCornerShape(50))
+                        )
+                    }
+                }
+            }
+        }
+    }
+    Spacer(modifier = Modifier.height(20.dp)) // Add spacing between the two button sections
+
 }
+
+@Composable
+fun SaveButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.size(200.dp, 80.dp),
+        shape = RoundedCornerShape(50),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
+    ) {
+        Text(text = "Save", color = Color.White)
+    }
+}
+
+@Composable
+fun SendButton(onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.size(200.dp, 80.dp),
+        shape = RoundedCornerShape(50),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
+    ) {
+        Text(text = "Send", color = Color.White)
+    }
+}
+
+
+
+//@Preview
+//@Composable
+//fun PreviewSnapScreenInfo() {
+//    val navController = rememberNavController()
+//    SnapScreenInfo(navController = navController)
+//}
