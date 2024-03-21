@@ -12,11 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import com.example.snapbin.model.data.Snap
 import com.example.snapbin.model.data.SnapStatus
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import org.osmdroid.util.GeoPoint
 
 class MainNavViewModel : ViewModel(){
@@ -33,15 +29,15 @@ class MainNavViewModel : ViewModel(){
         }
     }
     init{
-        snapListListener = Firebase.firestore.collection("/snaps").where(
-            Filter.equalTo("user",Firebase.auth.currentUser?.uid)).addSnapshotListener { snaps, ex ->
-            run {
-                if (snaps != null) {
-                    snapList.clear()
-                    snapList.addAll(snaps.toObjects(Snap::class.java))
-                }
-            }
-        }
+//        snapListListener = Firebase.firestore.collection("/snaps").where(
+//            Filter.equalTo("user",Firebase.auth.currentUser?.uid)).addSnapshotListener { snaps, ex ->
+//            run {
+//                if (snaps != null) {
+//                    snapList.clear()
+//                    snapList.addAll(snaps.toObjects(Snap::class.java))
+//                }
+//            }
+//        }
     }
     fun checkPermissions(context: Context){
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager

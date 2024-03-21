@@ -1,5 +1,6 @@
 package com.example.snapbin.Navigation
 
+import AccountScreen
 import VolunteerScreen
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -8,12 +9,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.snapbin.model.MainNavViewModel
+import com.example.snapbin.model.ProfileViewModel
 import com.example.snapbin.model.RootNavViewModel
 import com.example.snapbin.model.data.Snap
-import com.example.snapbin.screens.AccountScreen
+import com.example.snapbin.screens.CameraPermissionsView
 import com.example.snapbin.screens.CameraScreen
 import com.example.snapbin.screens.CheckEventScreen
 import com.example.snapbin.screens.CreateEventScreen
+import com.example.snapbin.screens.DeviceImage
+import com.example.snapbin.screens.EditScreen
 import com.example.snapbin.screens.HomeScreen
 import com.example.snapbin.screens.ListSnapScreen
 import com.example.snapbin.screens.LoginScreen
@@ -30,7 +34,8 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.Date
 
 @Composable
-fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewModel = viewModel(), mainNavViewModel: MainNavViewModel = viewModel()){
+fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewModel = viewModel(),
+                           mainNavViewModel: MainNavViewModel = viewModel(), profileViewModel: ProfileViewModel = viewModel()){
     val navController = rememberNavController()
     if(vm.isLoggedIn.value){
         MainScaffold(navController,vm)
@@ -86,6 +91,16 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
 
             composable(Routes.SnapScreenInfo){
                 SnapScreenInfo(navController, viewModel())
+            }
+
+            composable("camera"){
+                CameraPermissionsView(profileViewModel)
+            }
+            composable("device"){
+                DeviceImage(navController, profileViewModel )
+            }
+            composable(route="Edit"){
+                EditScreen(navController,profileViewModel)
             }
         }
 

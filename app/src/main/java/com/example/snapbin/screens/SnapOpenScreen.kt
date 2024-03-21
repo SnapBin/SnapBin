@@ -219,9 +219,9 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                 fontSize = 16.sp
             )
             Spacer(modifier = Modifier.height(25.dp))
-//            Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
-//                Text(text = "Map Screen")
-//            }
+            Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
+                Text(text = "Map Screen")
+            }
 
             Button(onClick = { navController.navigate(Routes.SnapScreenInfo)}) {
                 Text(text = "Trash Info")

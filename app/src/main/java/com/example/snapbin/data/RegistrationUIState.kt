@@ -7,6 +7,8 @@ data class RegistrationUIState(
     var password  :String = "",
     var confirmPassword: String = "",
     var privacyPolicy: Boolean = false,
+    var phoneNumber: String = "",
+    var dateofbirth: String = "",
 
 
     var firstNameError: Boolean = false,

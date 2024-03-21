@@ -75,7 +75,8 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
         )
         GridOfButtons(
             gridName = "",
-            buttonNames = listOf("HouseHold", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9"),
+            buttonNames = listOf("HouseHold", "Automotive", "Construction", "Plastic", "Electronic", "Organic",
+                "Metal", "Liquid", "Glass"),
             buttonImages = listOf(
                 R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
                 R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
@@ -113,22 +114,22 @@ fun ThreeRoundButtons() {
             selectedButton == 0,
             { setSelectedButton(if (selectedButton == 0) -1 else 0) }, // Toggle selection
             Modifier.padding(8.dp),
-            painterResource(id = R.drawable.pointer_green),
-            "Button 1"
+            painterResource(id = R.drawable.img_1),
+            "Fits in the bag"
         )
         RoundButton(
             selectedButton == 1,
             { setSelectedButton(if (selectedButton == 1) -1 else 1) }, // Toggle selection
             Modifier.padding(8.dp),
             painterResource(id = R.drawable.pointer_green),
-            "Button 2"
+            "Fits in a wheelbarrow"
         )
         RoundButton(
             selectedButton == 2,
             { setSelectedButton(if (selectedButton == 2) -1 else 2) }, // Toggle selection
             Modifier.padding(8.dp),
             painterResource(id = R.drawable.pointer_blue),
-            "Button 3"
+            "Car Needed"
         )
     }
 }
