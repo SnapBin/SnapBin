@@ -92,8 +92,11 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
             verticalAlignment = Alignment.CenterVertically,
             content = {
 //                SaveButton(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)})
-                SaveButton {}
-                SendButton(onClick = { /* Handle Send button click */ })
+                SaveSendButton {
+
+
+                }
+                DraftButton(onClick = { /* Handle Send button click */ })
             }
         )
 
@@ -331,26 +334,26 @@ fun DropDownBar() {
 }
 
 @Composable
-fun SaveButton(onClick: () -> Unit) {
+fun SaveSendButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier.size(200.dp, 80.dp),
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
     ) {
-        Text(text = "Save", color = Color.White)
+        Text(text = "Save and Send", color = Color.White)
     }
 }
 
 @Composable
-fun SendButton(onClick: () -> Unit) {
+fun DraftButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier.size(200.dp, 80.dp),
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
     ) {
-        Text(text = "Send", color = Color.White)
+        Text(text = "Draft", color = Color.White)
     }
 }
 
