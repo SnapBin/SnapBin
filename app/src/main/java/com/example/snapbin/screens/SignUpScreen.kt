@@ -1,11 +1,17 @@
 package com.example.snapbin.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,10 +20,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.snapbin.Components.*
+import com.example.snapbin.Components.ButtonComponent
+import com.example.snapbin.Components.CheckboxComponents
+import com.example.snapbin.Components.ClicableLoginTextComponents
+import com.example.snapbin.Components.ConfirmPasswordFieldComponent
+import com.example.snapbin.Components.DividerTextComponent
+import com.example.snapbin.Components.MyTextFieldComponent
+import com.example.snapbin.Components.NormalTextComponents
+import com.example.snapbin.Components.PasswordFieldComponent
+import com.example.snapbin.Components.WelcomeComponent
 import com.example.snapbin.Navigation.Routes
-import com.example.snapbin.Navigation.Screen
-import com.example.snapbin.Navigation.SnapBinAppRoute
 import com.example.snapbin.R
 import com.example.snapbin.data.signup.SignUpUIEvent
 import com.example.snapbin.data.signup.SignUpViewModel
@@ -57,7 +69,6 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel : SignUpViewM
                 MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Mail,
                     onTextSelected = {
                         signUpViewModel.onEvent(SignUpUIEvent.EmailChanged(it))
-
                     },
                     errorStatus = signUpViewModel.registrationUIState.value.emailError
                 )

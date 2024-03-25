@@ -147,6 +147,108 @@ fun MyTextFieldComponent(labelValue: String, imageVector: ImageVector,
     )
 
 }
+@Composable
+fun EquipementComponent(labelValue: String,
+                         onTextSelected: (String) -> Unit
+
+){
+    val textValue = remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+
+        label = {Text(text = labelValue)},
+
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Bar_Color,
+            focusedLabelColor = Bar_Color,
+            cursorColor = Bar_Color,
+            backgroundColor = Bar_Color,
+            textColor = Color.Black
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
+        value = textValue.value,
+        onValueChange = {
+            textValue.value = it
+            onTextSelected(it)
+        }
+
+    )
+
+}
+
+@Composable
+fun ContactComponent(labelValue: String,
+                        onTextSelected: (String) -> Unit
+
+){
+    val textValue = remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+
+        label = {Text(text = labelValue)},
+
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Bar_Color,
+            focusedLabelColor = Bar_Color,
+            cursorColor = Bar_Color,
+            backgroundColor = Bar_Color,
+            textColor = Color.Black
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
+        value = textValue.value,
+        onValueChange = {
+            textValue.value = it
+            onTextSelected(it)
+        },
+
+
+    )
+
+}
+
+@Composable
+fun LocationComponent(labelValue: String,
+                     onTextSelected: (String) -> Unit
+){
+    val textValue = remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+
+        label = {Text(text = labelValue)},
+
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Bar_Color,
+            focusedLabelColor = Bar_Color,
+            cursorColor = Bar_Color,
+            backgroundColor = Bar_Color,
+            textColor = Color.Black
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
+        value = textValue.value,
+        onValueChange = {
+            textValue.value = it
+            onTextSelected(it)
+        },
+
+
+    )
+
+}
 
 @Composable
 fun PasswordFieldComponent(labelValue : String, imageVector: ImageVector,
