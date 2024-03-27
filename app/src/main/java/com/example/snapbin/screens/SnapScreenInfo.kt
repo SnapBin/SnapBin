@@ -1,6 +1,8 @@
 package com.example.snapbin.screens
 
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,13 +46,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.model.SnapScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewModel()) {
     vm.navController = navController
+    var selectedButton1 by remember { mutableStateOf(-1) }
+    var selectedButton2 by remember { mutableStateOf(-1) }
+
 
     Column(
         modifier = Modifier
@@ -65,7 +73,13 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
             color = colorResource(id = R.color.Bar_Color),
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
         )
-        ThreeRoundButtons()
+        ThreeRoundButtons(
+            selectedButton1 = selectedButton1,
+            onButtonClicked1 = { index ->
+                // Update the selectedButton state variable when a button is clicked
+                selectedButton1 = index
+            }
+        )
         Spacer(modifier = Modifier.height(16.dp)) // Add spacing between the two button sections
         Text(
             text = "Type of Trash",
@@ -73,16 +87,23 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
             color = colorResource(id = R.color.Bar_Color),
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
         )
-        GridOfButtons(
-            gridName = "",
-            buttonNames = listOf("HouseHold", "Automotive", "Construction", "Plastic", "Electronic", "Organic",
-                "Metal", "Liquid", "Glass"),
-            buttonImages = listOf(
-                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
-                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
-                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue
-            )
+        NineRoundButtons(
+            selectedButton = selectedButton2,
+            onButtonClicked = { index ->
+                // Update the selectedButton state variable when a button is clicked
+                selectedButton2 = index
+            }
         )
+//        GridOfButtons(
+//            gridName = "",
+//            buttonNames = listOf("HouseHold", "Automotive", "Construction", "Plastic", "Electronic", "Organic",
+//                "Metal", "Liquid", "Glass"),
+//            buttonImages = listOf(
+//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
+//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
+//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue
+//            )
+//        )
         Spacer(modifier = Modifier.height(20.dp)) // Add spacing between the two button sections
         DropDownBar()
 
@@ -93,8 +114,35 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
             content = {
 //                SaveButton(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)})
                 SaveSendButton {
+                    val sizeOfTrash = when (selectedButton1) {
+                        0 -> "Fits in the bag"
+                        1 -> "Fits in a wheelbarrow"
+                        2 -> "Car Needed"
+                        else -> ""
+                    }
+                    // Determine the selected types of trash
+//                    val typeOfTrash = selectedButtons.joinToString(", ") { index ->
+//                        if (index < buttonNames.size) buttonNames[index] else ""
+//                    }
+                    val typeOfTrash = when (selectedButton2) {
+                        0 -> "HouseHold"
+                        1 -> "Automotive"
+                        2 -> "Construction"
+                        3 -> "Plastic"
+                        4 -> "Electronic"
+                        5 -> "Organic"
+                        6-> "Metal"
+                        7 -> "Liquid"
+                        8 -> "Glass"
+                        else -> ""
+                    }
 
+                    val reportBy = "User Info" // Change this according to your logic
+                    Log.d(TAG, "Size of Trash: $sizeOfTrash")
+                    Log.d(TAG, "Type of Trash: $typeOfTrash")
 
+                    storeSnapInfo(sizeOfTrash, typeOfTrash, reportBy)
+                    navController.navigate(Routes.HOME_SCREEN)
                 }
                 DraftButton(onClick = { /* Handle Send button click */ })
             }
@@ -104,38 +152,142 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
 }
 
 @Composable
-fun ThreeRoundButtons() {
-    // Remember the selected button
-    val (selectedButton, setSelectedButton) = remember { mutableStateOf(-1) }
-
+fun ThreeRoundButtons(
+    selectedButton1: Int,
+    onButtonClicked1: (Int) -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth()
-
     ) {
         RoundButton(
-            selectedButton == 0,
-            { setSelectedButton(if (selectedButton == 0) -1 else 0) }, // Toggle selection
-            Modifier.padding(8.dp),
-            painterResource(id = R.drawable.img_1),
-            "Fits in the bag"
+            selected = selectedButton1 == 0,
+            onClick = { onButtonClicked1(0) },
+            modifier = Modifier.padding(8.dp),
+            image = painterResource(id = R.drawable.img_1),
+            buttonText = "Fits in the bag",
+            buttonIndex = 0
         )
         RoundButton(
-            selectedButton == 1,
-            { setSelectedButton(if (selectedButton == 1) -1 else 1) }, // Toggle selection
-            Modifier.padding(8.dp),
-            painterResource(id = R.drawable.pointer_green),
-            "Fits in a wheelbarrow"
+            selected = selectedButton1 == 1,
+            onClick = { onButtonClicked1(1) },
+            modifier = Modifier.padding(8.dp),
+            image = painterResource(id = R.drawable.pointer_green),
+            buttonText = "Fits in a wheelbarrow",
+            buttonIndex = 1
         )
         RoundButton(
-            selectedButton == 2,
-            { setSelectedButton(if (selectedButton == 2) -1 else 2) }, // Toggle selection
-            Modifier.padding(8.dp),
-            painterResource(id = R.drawable.pointer_blue),
-            "Car Needed"
+            selected = selectedButton1 == 2,
+            onClick = { onButtonClicked1(2) },
+            modifier = Modifier.padding(8.dp),
+            image = painterResource(id = R.drawable.pointer_blue),
+            buttonText = "Car Needed",
+            buttonIndex = 2
         )
     }
 }
+
+
+@Composable
+fun NineRoundButtons(
+    selectedButton: Int,
+    onButtonClicked: (Int) -> Unit
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            RoundButton(
+                selected = selectedButton == 0,
+                onClick = { onButtonClicked(0) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.img_1),
+                buttonText = "HouseHold",
+                buttonIndex = 0
+            )
+            RoundButton(
+                selected = selectedButton == 1,
+                onClick = { onButtonClicked(1) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_green),
+                buttonText = "Automotive",
+                buttonIndex = 1
+            )
+            RoundButton(
+                selected = selectedButton == 2,
+                onClick = { onButtonClicked(2) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Construction",
+                buttonIndex = 2
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            RoundButton(
+                selected = selectedButton == 3,
+                onClick = { onButtonClicked(3) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Plastic",
+                buttonIndex = 3
+            )
+            RoundButton(
+                selected = selectedButton == 4,
+                onClick = { onButtonClicked(4) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Electronic",
+                buttonIndex = 4
+            )
+            RoundButton(
+                selected = selectedButton == 5,
+                onClick = { onButtonClicked(5) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Organic",
+                buttonIndex = 5
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            RoundButton(
+                selected = selectedButton == 6,
+                onClick = { onButtonClicked(6) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Metal",
+                buttonIndex = 6
+            )
+            RoundButton(
+                selected = selectedButton == 7,
+                onClick = { onButtonClicked(7) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Liquid",
+                buttonIndex = 7
+            )
+            RoundButton(
+                selected = selectedButton == 8,
+                onClick = { onButtonClicked(8) },
+                modifier = Modifier.padding(8.dp),
+                image = painterResource(id = R.drawable.pointer_blue),
+                buttonText = "Glass",
+                buttonIndex = 8
+            )
+        }
+    }
+}
+
+
 
 @Composable
 fun RoundButton(
@@ -143,21 +295,26 @@ fun RoundButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     image: Painter,
-    buttonText: String
+    buttonText: String,
+    buttonIndex: Int // Add buttonIndex parameter
 ) {
     val buttonColor = Color(0xFF52B69A) // Button color always #52B69A
     val borderColor = if (selected) Color.Blue else Color.Transparent // Ring color
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(8.dp)
+        modifier = modifier.padding(8.dp)
     ) {
         Box(
             modifier = Modifier
                 .size(80.dp)
                 .background(color = buttonColor, shape = CircleShape)
                 .border(2.dp, borderColor, CircleShape)
-                .clickable { onClick() },
+                .clickable {
+                    onClick()
+                    // Update selectedButton when the button is clicked
+                    // selectedButton = buttonIndex // Uncomment this line if you need to update selectedButton
+                },
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -180,31 +337,34 @@ fun RoundButton(
 fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: List<Int>) {
     val selectedButtons = remember { mutableStateListOf<Int>() }
 
-    val buttonSize = 80.dp
-    val gridModifier = Modifier.padding(top = 8.dp)
-
     Column(
-        modifier = gridModifier
+        modifier = Modifier.padding(top = 8.dp)
     ) {
+        // Display grid name
         Text(
             text = gridName,
             fontSize = 16.sp,
             color = Color.Black,
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
         )
-        repeat(3) { rowIndex ->
+
+        // Create a grid of buttons
+        for (rowIndex in 0 until 3) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                repeat(3) { columnIndex ->
+                for (columnIndex in 0 until 3) {
                     val index = rowIndex * 3 + columnIndex
                     val isSelected = selectedButtons.contains(index)
                     val buttonText = if (index < buttonNames.size) buttonNames[index] else ""
                     val buttonImage = if (index < buttonImages.size) buttonImages[index] else R.drawable.pointer_green
+
+                    // Create individual button
                     GridButton(
                         selected = isSelected,
                         onClick = {
+                            // Toggle button selection
                             if (isSelected) {
                                 selectedButtons.remove(index)
                             } else {
@@ -223,23 +383,50 @@ fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: Lis
     }
 }
 
+fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
+    val db = Firebase.firestore
+    val snapInfo = hashMapOf(
+        "sizeOfTrash" to sizeOfTrash,
+        "typeOfTrash" to typeOfTrash,
+        "reportBy" to reportBy
+    )
+
+    // Add a new document with a generated ID
+    db.collection("snapInfo")
+        .add(snapInfo)
+        .addOnSuccessListener { documentReference ->
+            // Log successful addition
+            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            // Log failure
+            Log.w(TAG, "Error adding document", e)
+        }
+}
+
 @Composable
-fun GridButton(selected: Boolean, onClick: () -> Unit, buttonText: String, image: Int,
-               modifier: Modifier = Modifier
+fun GridButton(
+    selected: Boolean,
+    onClick: () -> Unit,
+    buttonText: String,
+    image: Int,
+    modifier: Modifier = Modifier
 ) {
+    // Button color and border color based on selection state
     val buttonColor = Color(0xFF52B69A)
     val borderColor = if (selected) Color.Blue else Color.Transparent
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.clickable { onClick() }
+        modifier = modifier.clickable { onClick() } // Toggle button selection
     ) {
+        // Button content
         Box(
             modifier = Modifier
                 .size(80.dp)
                 .background(color = buttonColor, shape = CircleShape)
                 .border(2.dp, borderColor, CircleShape),
-            contentAlignment = Alignment.Center // Center the content in the Box
+            contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = image),

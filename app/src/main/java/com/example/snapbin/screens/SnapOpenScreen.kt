@@ -1,5 +1,6 @@
 package com.example.snapbin.screens
 
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -56,7 +57,10 @@ import com.example.snapbin.model.SnapScreenViewModel
 import com.example.snapbin.model.data.Snap
 import com.example.snapbin.model.data.Urgency
 import com.example.snapbin.view.ErrorCard
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.net.URLDecoder
+import java.util.Date
 
 
 @Composable
@@ -223,13 +227,42 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                 Text(text = "Map Screen")
             }
 
-            Button(onClick = { navController.navigate(Routes.SnapScreenInfo)}) {
+            Button(onClick = {
+
+                storeSnapInfo(
+                    location = "${snap.location.latitude}, ${snap.location.longitude}",
+                    datetime = Date(), // You can replace this with the actual datetime
+                    description = vm.description.value,
+                    urgency = vm.urgency.value.toString() // Convert urgency enum to string
+                )
+                navController.navigate(Routes.SnapScreenInfo)}) {
                 Text(text = "Trash Info")
             }
         }
     }
 }
 
+
+
+fun storeSnapInfo(location: String, datetime: Date, description: String, urgency: String) {
+    val db = Firebase.firestore
+    val snapInfo = hashMapOf(
+        "location" to location,
+        "datetime" to datetime,
+        "description" to description,
+        "urgency" to urgency
+    )
+
+    // Add a new document with a generated ID
+    db.collection("snapInfo")
+        .add(snapInfo)
+        .addOnSuccessListener { documentReference ->
+            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            Log.w(TAG, "Error adding document", e)
+        }
+}
 
 
 @Composable
