@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material.icons.sharp.Lens
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -103,11 +105,11 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
     ) {
         Box(
             Modifier
-                .height((configuration.screenHeightDp * 0.6).dp)
-                .width((configuration.screenWidthDp * 0.75).dp)
+                .height((configuration.screenHeightDp * 0.7).dp)
+                .width((configuration.screenWidthDp * 0.85).dp)
                 .border(
-                    width = 2.dp,
-                    color = MaterialTheme.colorScheme.primary,
+                    width = 3.dp,
+                    color = colorResource(id = R.color.Bar_Color)
                 )
                 .background(color = MaterialTheme.colorScheme.surface)
         ) {
@@ -126,6 +128,10 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
                 onClick = {
                     vm.takeImage.value = true
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.ToppAppBarColor),
+                    contentColor = colorResource(id = R.color.Menus)
+                ),
                 modifier = Modifier
                     .width(150.dp)
                     .height(70.dp)
@@ -135,6 +141,7 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
                 Icon(
                     Icons.Outlined.RestartAlt,
                     contentDescription = "Retake Icon",
+                    tint = Color.Black,
                     modifier = Modifier.fillMaxSize(),
                 )
                 /*
@@ -168,6 +175,10 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
                     val snapJson = adapter.toJson(snap)
                     navController.navigate(Routes.SINGLE_SNAP.replace("{snap}",snapJson))
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.ToppAppBarColor),
+                    contentColor = colorResource(id = R.color.Menus)
+                ),
                 modifier = Modifier
                     .width(150.dp)
                     .height(70.dp)
@@ -177,6 +188,7 @@ fun ShowImageTaken(vm: CameraViewModel = viewModel(),location: GeoPoint,navContr
                 Icon(
                     Icons.Outlined.Done,
                     contentDescription = "Done Icon",
+                    tint = Color.Black,
                     modifier = Modifier.fillMaxSize(),
                 )
                 /*

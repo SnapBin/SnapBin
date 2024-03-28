@@ -150,6 +150,26 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
 
     }
 }
+fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
+    val db = Firebase.firestore
+    val snapInfo = hashMapOf(
+        "sizeOfTrash" to sizeOfTrash,
+        "typeOfTrash" to typeOfTrash, 
+        "reportBy" to reportBy
+    )
+
+    // Add a new document with a generated ID
+    db.collection("snapInfo")
+        .add(snapInfo)
+        .addOnSuccessListener { documentReference ->
+            // Log successful addition
+            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            // Log failure
+            Log.w(TAG, "Error adding document", e)
+        }
+}
 
 @Composable
 fun ThreeRoundButtons(
@@ -164,7 +184,7 @@ fun ThreeRoundButtons(
             selected = selectedButton1 == 0,
             onClick = { onButtonClicked1(0) },
             modifier = Modifier.padding(8.dp),
-            image = painterResource(id = R.drawable.img_1),
+            image = painterResource(id = R.drawable.bag),
             buttonText = "Fits in the bag",
             buttonIndex = 0
         )
@@ -172,7 +192,7 @@ fun ThreeRoundButtons(
             selected = selectedButton1 == 1,
             onClick = { onButtonClicked1(1) },
             modifier = Modifier.padding(8.dp),
-            image = painterResource(id = R.drawable.pointer_green),
+            image = painterResource(id = R.drawable.wheelborrow),
             buttonText = "Fits in a wheelbarrow",
             buttonIndex = 1
         )
@@ -180,7 +200,7 @@ fun ThreeRoundButtons(
             selected = selectedButton1 == 2,
             onClick = { onButtonClicked1(2) },
             modifier = Modifier.padding(8.dp),
-            image = painterResource(id = R.drawable.pointer_blue),
+            image = painterResource(id = R.drawable.car),
             buttonText = "Car Needed",
             buttonIndex = 2
         )
@@ -205,7 +225,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 0,
                 onClick = { onButtonClicked(0) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.img_1),
+                image = painterResource(id = R.drawable.household),
                 buttonText = "HouseHold",
                 buttonIndex = 0
             )
@@ -213,7 +233,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 1,
                 onClick = { onButtonClicked(1) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_green),
+                image = painterResource(id = R.drawable.automotive),
                 buttonText = "Automotive",
                 buttonIndex = 1
             )
@@ -221,7 +241,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 2,
                 onClick = { onButtonClicked(2) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.construction),
                 buttonText = "Construction",
                 buttonIndex = 2
             )
@@ -234,7 +254,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 3,
                 onClick = { onButtonClicked(3) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.plastic),
                 buttonText = "Plastic",
                 buttonIndex = 3
             )
@@ -242,7 +262,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 4,
                 onClick = { onButtonClicked(4) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.ewaste),
                 buttonText = "Electronic",
                 buttonIndex = 4
             )
@@ -250,7 +270,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 5,
                 onClick = { onButtonClicked(5) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.organic),
                 buttonText = "Organic",
                 buttonIndex = 5
             )
@@ -263,7 +283,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 6,
                 onClick = { onButtonClicked(6) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.metal),
                 buttonText = "Metal",
                 buttonIndex = 6
             )
@@ -271,7 +291,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 7,
                 onClick = { onButtonClicked(7) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.liquid),
                 buttonText = "Liquid",
                 buttonIndex = 7
             )
@@ -279,7 +299,7 @@ fun NineRoundButtons(
                 selected = selectedButton == 8,
                 onClick = { onButtonClicked(8) },
                 modifier = Modifier.padding(8.dp),
-                image = painterResource(id = R.drawable.pointer_blue),
+                image = painterResource(id = R.drawable.glasses),
                 buttonText = "Glass",
                 buttonIndex = 8
             )
@@ -383,26 +403,7 @@ fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: Lis
     }
 }
 
-fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
-    val db = Firebase.firestore
-    val snapInfo = hashMapOf(
-        "sizeOfTrash" to sizeOfTrash,
-        "typeOfTrash" to typeOfTrash,
-        "reportBy" to reportBy
-    )
 
-    // Add a new document with a generated ID
-    db.collection("snapInfo")
-        .add(snapInfo)
-        .addOnSuccessListener { documentReference ->
-            // Log successful addition
-            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-        }
-        .addOnFailureListener { e ->
-            // Log failure
-            Log.w(TAG, "Error adding document", e)
-        }
-}
 
 @Composable
 fun GridButton(
@@ -526,7 +527,8 @@ fun SaveSendButton(onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier.size(200.dp, 80.dp),
         shape = RoundedCornerShape(50),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
+
     ) {
         Text(text = "Save and Send", color = Color.White)
     }
@@ -538,7 +540,7 @@ fun DraftButton(onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier.size(200.dp, 80.dp),
         shape = RoundedCornerShape(50),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF52B69A))
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
     ) {
         Text(text = "Draft", color = Color.White)
     }

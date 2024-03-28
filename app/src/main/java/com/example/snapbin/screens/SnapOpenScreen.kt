@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -44,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +53,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.snapbin.Navigation.Routes
+import com.example.snapbin.R
 import com.example.snapbin.data.SnapImageDownloader
 import com.example.snapbin.model.MainNavViewModel
 import com.example.snapbin.model.SnapScreenViewModel
@@ -113,133 +116,154 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
         else
             vm.snapUrl.value = SnapImageDownloader.downloadSnap(context,snap)
     }
-    Column {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .requiredHeight((configuration.screenHeightDp * 0.25).dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.Menus)) // Set the background color to #A7D0A1
+    ){
+        Column {
 
-        ) {
-
-            if(vm.snapUrl.value == Uri.EMPTY)
-                Row(modifier=Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center){
-                    Spacer(modifier = Modifier.height(5.dp))
-                    CircularProgressIndicator()
-                }
-            else
-                Image(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.Crop,
-                    painter = rememberAsyncImagePainter(URLDecoder.decode(vm.snapUrl.value.toString(),"UTF-8"),onError = { Log.e("SNAPBIN_IMAGE",it.result.throwable.message ?: "")}),
-                    contentDescription = "My Image"
-                )
-        }
-        Column(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-        ) {
-            if(vm.error.value != null){
-                ErrorCard(error = stringResource(id = vm.error.value!!))
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-            Row(){
-                Column(){
-                    Text(text = "Location", fontSize = 18.sp)
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Text(
-                        text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 16.sp,
-                    )
-                }
-                Spacer(modifier = Modifier.width(40.dp))
-                Column(){
-                    Text(text = "Date", fontSize = 18.sp)
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Text(text = snap.getFormattedDate(),
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 16.sp)
-
-                }
-
-            }
-
-            /* previous code just Location
-            Text(text = stringResource(com.snaptrash.snaptrash.R.string.word_location), fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
-                fontSize = 16.sp,
-            )
-
-             */
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(text = "Description", fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(5.dp))
             Box(
                 Modifier
-                    .height((configuration.screenHeightDp * 0.25).dp)
                     .fillMaxWidth()
-                    //.aspectRatio(1.0f) // fixed aspect ratio
-                    //.clip(RoundedCornerShape(8.dp))
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        //shape = RoundedCornerShape(8.dp)
-                    )
-                    .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                    .requiredHeight((configuration.screenHeightDp * 0.25).dp)
+
             ) {
-                OutlinedTextField(
-                    value = vm.description.value,
-                    enabled = isNew,
-                    modifier = Modifier.fillMaxSize(),
-                    onValueChange ={vm.description.value = it})
-            }
-            Spacer(Modifier.height(20.0.dp))
-            Text("Urgency",fontSize = 18.sp)
-            Slider(
-                value = vm.urgency.value.value.toFloat(),
-                enabled = isNew ,
-                steps = Urgency.values().size,
-                valueRange = 0.0f..Urgency.values().size.toFloat() - 1.0f,
-                colors = SliderDefaults.colors(
-                    thumbColor = MaterialTheme.colorScheme.onBackground,
-                    activeTickColor = MaterialTheme.colorScheme.onBackground,
-                    activeTrackColor = MaterialTheme.colorScheme.onBackground,
-                    disabledActiveTickColor = MaterialTheme.colorScheme.onBackground,
-                    disabledActiveTrackColor = MaterialTheme.colorScheme.onBackground),
-                onValueChange = {vm.urgency.value = Urgency.values()[it.toInt()]}
-            )
-            Text(
-                text = when(vm.urgency.value){
-                    Urgency.NOT_URGENT -> stringResource(com.example.snapbin.R.string.not_urgent)
-                    Urgency.SERIOUS -> stringResource(com.example.snapbin.R.string.word_serious)
-                    Urgency.URGENT -> stringResource(com.example.snapbin.R.string.word_urgent)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                fontSize = 16.sp
-            )
-            Spacer(modifier = Modifier.height(25.dp))
-            Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
-                Text(text = "Map Screen")
-            }
 
-            Button(onClick = {
+                if(vm.snapUrl.value == Uri.EMPTY)
+                    Row(modifier=Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center){
+                        Spacer(modifier = Modifier.height(5.dp))
+                        CircularProgressIndicator()
+                    }
+                else
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentScale = ContentScale.Crop,
+                        painter = rememberAsyncImagePainter(URLDecoder.decode(vm.snapUrl.value.toString(),"UTF-8"),onError = { Log.e("SNAPBIN_IMAGE",it.result.throwable.message ?: "")}),
+                        contentDescription = "My Image"
+                    )
+            }
+            Column(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
 
-                storeSnapInfo(
-                    location = "${snap.location.latitude}, ${snap.location.longitude}",
-                    datetime = Date(), // You can replace this with the actual datetime
-                    description = vm.description.value,
-                    urgency = vm.urgency.value.toString() // Convert urgency enum to string
+            ) {
+                if(vm.error.value != null){
+                    ErrorCard(error = stringResource(id = vm.error.value!!))
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+                Row(){
+                    Column(){
+                        Text(text = "Location", fontSize = 18.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(40.dp))
+                    Column(){
+                        Text(text = "Date", fontSize = 18.sp)
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(text = snap.getFormattedDate(),
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp)
+
+                    }
+
+                }
+
+                /* previous code just Location
+                Text(text = stringResource(com.snaptrash.snaptrash.R.string.word_location), fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(5.dp))
+                Text(
+                    text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
+                    fontSize = 16.sp,
                 )
-                navController.navigate(Routes.SnapScreenInfo)}) {
-                Text(text = "Trash Info")
+    
+                 */
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(text = "Description", fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(5.dp))
+                Box(
+                    Modifier
+                        .height((configuration.screenHeightDp * 0.25).dp)
+                        .fillMaxWidth()
+                        //.aspectRatio(1.0f) // fixed aspect ratio
+                        //.clip(RoundedCornerShape(8.dp))
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            //shape = RoundedCornerShape(8.dp)
+                        )
+                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    OutlinedTextField(
+                        value = vm.description.value,
+                        enabled = isNew,
+                        modifier = Modifier.fillMaxSize(),
+                        onValueChange ={vm.description.value = it})
+                }
+                Spacer(Modifier.height(20.0.dp))
+                Text("Urgency",fontSize = 18.sp)
+                Slider(
+                    value = vm.urgency.value.value.toFloat(),
+                    enabled = isNew ,
+                    steps = Urgency.values().size,
+                    valueRange = 0.0f..Urgency.values().size.toFloat() - 1.0f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = MaterialTheme.colorScheme.onBackground,
+                        activeTickColor = MaterialTheme.colorScheme.onBackground,
+                        activeTrackColor = MaterialTheme.colorScheme.onBackground,
+                        disabledActiveTickColor = MaterialTheme.colorScheme.onBackground,
+                        disabledActiveTrackColor = MaterialTheme.colorScheme.onBackground),
+                    onValueChange = {vm.urgency.value = Urgency.values()[it.toInt()]}
+                )
+                Text(
+                    text = when(vm.urgency.value){
+                        Urgency.NOT_URGENT -> stringResource(com.example.snapbin.R.string.not_urgent)
+                        Urgency.SERIOUS -> stringResource(com.example.snapbin.R.string.word_serious)
+                        Urgency.URGENT -> stringResource(com.example.snapbin.R.string.word_urgent)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.height(25.dp))
+//                Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
+//                    Text(text = "Map Screen")
+//                }
+
+                Button(onClick = {
+
+                    storeSnapInfo(
+                        location = "${snap.location.latitude}, ${snap.location.longitude}",
+                        datetime = Date(), // You can replace this with the actual datetime
+                        description = vm.description.value,
+                        urgency = vm.urgency.value.toString() // Convert urgency enum to string
+                    )
+                    vm.doSnapFunction()
+                    navController.navigate(Routes.SnapScreenInfo)
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.ToppAppBarColor),
+                        contentColor = colorResource(id = R.color.Menus)
+                    ),
+                    modifier = Modifier
+                        .height(70.dp) // Adjust the height as needed
+                        .fillMaxWidth() // Make the button fill the available width
+                ) {
+                    Text(text = "Trash Info",color = colorResource(id = R.color.black), // Set the text color to black
+                        fontSize = 20.sp )
+                }
             }
         }
+        
     }
+    
 }
 
 

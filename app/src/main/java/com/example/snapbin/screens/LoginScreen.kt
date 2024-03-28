@@ -1,36 +1,44 @@
 package com.example.snapbin.screens
 
+//import com.example.snapbin.Navigation.SystemBackButtonHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Mail
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.snapbin.Components.*
+import com.example.snapbin.Components.ButtonComponent
+import com.example.snapbin.Components.ClicableLoginTextComponents
+import com.example.snapbin.Components.DividerTextComponent
+import com.example.snapbin.Components.MyTextFieldComponent
+import com.example.snapbin.Components.NormalTextComponent
+import com.example.snapbin.Components.NormalTextComponents
+import com.example.snapbin.Components.PasswordFieldComponent
+import com.example.snapbin.Components.WelcomeComponent
 import com.example.snapbin.Navigation.Routes
-import com.example.snapbin.Navigation.Screen
-import com.example.snapbin.Navigation.SnapBinAppRoute
-//import com.example.snapbin.Navigation.SystemBackButtonHandler
 import com.example.snapbin.R
 import com.example.snapbin.data.login.LoginUIEvent
 import com.example.snapbin.data.login.LoginViewModel
-import okhttp3.Route
 
 @Composable
 fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel = viewModel()) {
@@ -47,7 +55,25 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
         ){
             Column(modifier = Modifier.fillMaxSize()) {
                 NormalTextComponents(value = stringResource(R.string.Title))
-                WelcomeComponent(value = "Welcome Back")
+                WelcomeComponent(value = "Welcome")
+                Spacer(modifier = Modifier.height(5.dp))
+                // Adding the Box composable for centering the image
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // Image composable
+                    Image(
+                        painter = painterResource(id = R.drawable.logo), // Replace "your_image" with your image resource
+                        contentDescription = "Your Image",
+                        contentScale = ContentScale.Fit, // Adjust content scale as needed
+                        modifier = Modifier
+                            .size(85.dp)
+                            .clip(shape = RoundedCornerShape(8.dp))
+
+                    )
+                }
+
 
                 MyTextFieldComponent(labelValue = stringResource(R.string.Email), imageVector = Icons.Default.Mail,
                     onTextSelected = {

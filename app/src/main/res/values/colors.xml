@@ -10,4 +10,7 @@
     <color name="ToppAppBarColor">#FF34A0A4</color>
     <color name="Bar_Color">#FF52B69A</color>
     <color name = "gray">#FF7B6F72</color>
+    <color name = "Menus">#FFA7D0A1</color>
+
+
 </resources>

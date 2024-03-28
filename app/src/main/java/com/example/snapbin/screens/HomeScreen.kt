@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -159,6 +161,10 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                             onClick = {
                                 navController.navigate(Routes.CAMERA_SCREEN)
                             },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(id = R.color.ToppAppBarColor),
+                                contentColor = colorResource(id = R.color.Menus)
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(70.dp)
@@ -166,10 +172,11 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                         ) {
                             Text(
                                 text = "Take A snap",
-                                fontSize = 24.sp,
+                                fontSize = 26.sp,
+                                fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                                color = Color.Black
                             )
                         }
                     } else {
@@ -183,8 +190,8 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                                 mainNavViewModel.checkPermissions(context)
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.errorContainer,
-                                contentColor = MaterialTheme.colorScheme.onErrorContainer
+                                containerColor = colorResource(id = R.color.ToppAppBarColor),
+                                contentColor = colorResource(id = R.color.Menus)
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -194,9 +201,10 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                                     !cameraPermission.status.isGranted)
                                     "Button Request permission"
                                 else "Turn on Location",
-                                fontSize = 24.sp,
-                                lineHeight = 27.sp,
+                                fontSize = 26.sp,
+                                lineHeight = 26.sp,
                                 textAlign = TextAlign.Center,
+                                color = Color.Black,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(5.dp)

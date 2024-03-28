@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -600,34 +601,36 @@ fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit, navigation
 fun NavigationDrawerHeader(value: String?) {
     Box(
         modifier = Modifier
-            .background(
-                Brush.horizontalGradient(
-                    listOf(nav_bar, nav_bar)
-                )
-            )
+            .background(colorResource(id = R.color.Bar_Color))
             .fillMaxWidth()
             .height(180.dp)
             .padding(32.dp)
     ) {
 
         NavigationDrawerText(
-            title = value?:stringResource(R.string.navigation_header), 28.sp , nav_bar
-        )
+            title = value?:stringResource(R.string.navigation_header), 28.sp , colorResource(id = R.color.Menus))
 
     }
 }
 
 @Composable
-fun NavigationDrawerBody(navigationDrawerItems: List<NavigationItem>,
-                         onNavigationItemClicked:(NavigationItem) -> Unit) {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-
-        items(navigationDrawerItems) {
-            NavigationItemRow(item = it,onNavigationItemClicked)
+fun NavigationDrawerBody(
+    navigationDrawerItems: List<NavigationItem>,
+    onNavigationItemClicked:(NavigationItem) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(id = R.color.Menus)) // Set the background color to #FFA7D0A1
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            items(navigationDrawerItems) {
+                NavigationItemRow(item = it, onNavigationItemClicked)
+            }
         }
-
     }
 }
+
 
 @Composable
 fun NavigationItemRow(item: NavigationItem,
@@ -636,10 +639,12 @@ fun NavigationItemRow(item: NavigationItem,
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(colorResource(id = R.color.Menus))
             .clickable {
                 onNavigationItemClicked.invoke(item)
             }
             .padding(all = 20.dp)
+
     ) {
 
         Icon(
@@ -649,7 +654,7 @@ fun NavigationItemRow(item: NavigationItem,
 
         Spacer(modifier = Modifier.width(25.dp))
 
-        NavigationDrawerText(title = item.title, 20.sp, nav_bar)
+        NavigationDrawerText(title = item.title, 20.sp, colorResource(id = R.color.Menus))
 
 
     }
@@ -662,7 +667,7 @@ fun NavigationDrawerText(title: String, textUnit: TextUnit, color: Color) {
 
     Text(
         text = title, style = TextStyle(
-            color = Color.White,
+            color = Color.Black,
             fontSize = textUnit,
             fontStyle = FontStyle.Normal,
             shadow = Shadow(
