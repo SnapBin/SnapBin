@@ -83,8 +83,7 @@ data class Event(
     val endDate: String,
     val equipmentProvided: String,
     val organisedBy: String,
-    val locationaddress: String
-)
+    val locationaddress: String,)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CreateEventScreen(
@@ -348,7 +347,7 @@ fun CreateEventScreen(
                                 endDate = endDateInput,
                                 equipmentProvided = equipmentProvidedText,
                                 organisedBy = organisedby,
-                                locationaddress = locationaddress
+                                locationaddress = locationaddress,
                             )
                             createEventViewModel.createEvent(event)
                             // Navigate to checkEvent screen
