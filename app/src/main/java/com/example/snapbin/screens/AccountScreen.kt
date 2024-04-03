@@ -102,6 +102,7 @@ fun AccountScreen(navController: NavHostController, homeViewModel: HomeViewModel
                         "volunteerScreen" -> navController.navigate(Routes.VOLUNTEER_SCREEN)
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
+                        "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()
@@ -123,40 +124,6 @@ fun AccountScreen(navController: NavHostController, homeViewModel: HomeViewModel
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//                Box(
-//                    modifier = Modifier
-//                        .size(120.dp) // Adjust the size of the logo
-//                        .clickable {
-//                            // Open options for selecting or clicking a photo
-//                            launcher.launch("image/*")
-//                        },
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Box(
-//                        modifier = Modifier
-//                            .size(120.dp)
-//                            .clip(CircleShape) // Clip the Box to a circle shape
-//                    ) {
-//                        selectedImageUri?.let { uri ->
-//                            Image(
-//                                painter = rememberAsyncImagePainter(uri),
-//                                contentDescription = "Profile Logo",
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                        } ?: run {
-//                            Image(
-//                                painter = painterResource(id = R.drawable.final_logo), // Default image
-//                                contentDescription = "Profile Logo",
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                        }
-//                    }
-//                }
-//                // Add additional information under the logo
-//                // For example:
-//                Text(text = "User Name", style = MaterialTheme.typography.subtitle1)
-//                Text(text = "User Email", style = MaterialTheme.typography.body2)
-//                // Add more information as needed
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -262,7 +229,7 @@ fun Info(firstName:String , lastName:String , birthDate:String ,phoneNumber : St
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = "First Name",
+                            text = stringResource(R.string.first_name),
                             color = MaterialTheme.colors.onSurface
                         )
                         Text(
@@ -292,7 +259,7 @@ fun Info(firstName:String , lastName:String , birthDate:String ,phoneNumber : St
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = "Last Name" ,
+                            text = stringResource(R.string.last_name) ,
                             color = MaterialTheme.colors.onSurface
                         )
                         Text(
@@ -323,7 +290,7 @@ fun Info(firstName:String , lastName:String , birthDate:String ,phoneNumber : St
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = "Email",
+                            text = stringResource(R.string.email),
                             color = MaterialTheme.colors.onSurface
                         )
                         Text(
@@ -353,7 +320,7 @@ fun Info(firstName:String , lastName:String , birthDate:String ,phoneNumber : St
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = "Birth date",
+                            text = stringResource(R.string.birth_date),
                             color = MaterialTheme.colors.onSurface
                         )
                         Text(
@@ -380,7 +347,7 @@ fun Info(firstName:String , lastName:String , birthDate:String ,phoneNumber : St
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            text = "Phone number",
+                            text = stringResource(R.string.phone_number),
                             color = MaterialTheme.colors.onSurface
                         )
                         Text(
@@ -435,25 +402,25 @@ fun ProfileImage(navController: NavController, urlImage : String){
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "Change Profile Photo",color = MaterialTheme.colors.onSurface)
+                        Text(text = stringResource(R.string.change_profile_photo),color = MaterialTheme.colors.onSurface)
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "emailIcon",
                             modifier=Modifier.clickable { showDialog.value = false }
                         )
                     } },
-                text = { Text(text = "take or upload a photo ",color = MaterialTheme.colors.onSurface) },
+                text = { Text(text = stringResource(R.string.take_or_upload_a_photo),color = MaterialTheme.colors.onSurface) },
                 confirmButton = {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
                         Button(
                             onClick = { navController.navigate("camera") }
                         ) {
-                            Text(text = "Take A photo",color = MaterialTheme.colors.onSurface)
+                            Text(text = stringResource(R.string.take_a_photo),color = MaterialTheme.colors.onSurface)
                         }
                         Button(
                             onClick = { navController.navigate("device") }
                         ) {
-                            Text(text = " Upload photo",color = MaterialTheme.colors.onSurface)
+                            Text(text = stringResource(R.string.upload_photo),color = MaterialTheme.colors.onSurface)
                         }
                     }
                 }
@@ -480,7 +447,7 @@ fun EditButton(navController: NavController){
     ) {
         Row(
         ){
-            Text(text="Edit", fontSize = 13.sp,color = MaterialTheme.colors.onSurface)
+            Text(text= stringResource(R.string.edit), fontSize = 13.sp,color = MaterialTheme.colors.onSurface)
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
             Icon(painter = painterResource(id = R.drawable.final_logo ) , contentDescription = "Edit Icon" , modifier= Modifier.size(15.dp))
         }

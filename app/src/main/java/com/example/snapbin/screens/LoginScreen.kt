@@ -55,7 +55,7 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
         ){
             Column(modifier = Modifier.fillMaxSize()) {
                 NormalTextComponents(value = stringResource(R.string.Title))
-                WelcomeComponent(value = "Welcome")
+                WelcomeComponent(value = stringResource(R.string.welcome))
                 Spacer(modifier = Modifier.height(5.dp))
                 // Adding the Box composable for centering the image
                 Box(
@@ -82,7 +82,7 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
                     errorStatus = loginViewModel.loginUIState.value.emailError
                 )
 
-                PasswordFieldComponent(labelValue = "Password", imageVector = Icons.Default.Lock,
+                PasswordFieldComponent(labelValue = stringResource(R.string.password), imageVector = Icons.Default.Lock,
                     onTextSelected = {
                         loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
 

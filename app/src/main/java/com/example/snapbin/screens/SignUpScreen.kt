@@ -66,7 +66,7 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel : SignUpViewM
                 ) {
                     // Image composable
                     Image(
-                        painter = painterResource(id = R.drawable.logo), // Replace "your_image" with your image resource
+                        painter = painterResource(id = R.drawable.logo), // image resource
                         contentDescription = "Your Image",
                         contentScale = ContentScale.Fit, // Adjust content scale as needed
                         modifier = Modifier

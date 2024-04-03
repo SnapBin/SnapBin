@@ -73,6 +73,7 @@ import com.example.snapbin.ui.theme.TextColor
 import com.example.snapbin.ui.theme.TopGreen
 import com.example.snapbin.ui.theme.nav_bar
 import com.example.snapbin.ui.theme.whiteColor
+import com.example.snapbin.widgets.LanguageSelector
 
 @Composable
 fun NormalTextComponents(value: String) {
@@ -627,7 +628,15 @@ fun NavigationDrawerBody(
             items(navigationDrawerItems) {
                 NavigationItemRow(item = it, onNavigationItemClicked)
             }
+            item {
+                Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp)){
+                LanguageSelector()
+            }  }
+
         }
+
     }
 }
 

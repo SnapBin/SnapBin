@@ -28,7 +28,6 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -94,16 +93,6 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
                 selectedButton2 = index
             }
         )
-//        GridOfButtons(
-//            gridName = "",
-//            buttonNames = listOf("HouseHold", "Automotive", "Construction", "Plastic", "Electronic", "Organic",
-//                "Metal", "Liquid", "Glass"),
-//            buttonImages = listOf(
-//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
-//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue,
-//                R.drawable.pointer_blue, R.drawable.pointer_blue, R.drawable.pointer_blue
-//            )
-//        )
         Spacer(modifier = Modifier.height(20.dp)) // Add spacing between the two button sections
         DropDownBar()
 
@@ -353,55 +342,55 @@ fun RoundButton(
     }
 }
 
-@Composable
-fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: List<Int>) {
-    val selectedButtons = remember { mutableStateListOf<Int>() }
-
-    Column(
-        modifier = Modifier.padding(top = 8.dp)
-    ) {
-        // Display grid name
-        Text(
-            text = gridName,
-            fontSize = 16.sp,
-            color = Color.Black,
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
-        )
-
-        // Create a grid of buttons
-        for (rowIndex in 0 until 3) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                for (columnIndex in 0 until 3) {
-                    val index = rowIndex * 3 + columnIndex
-                    val isSelected = selectedButtons.contains(index)
-                    val buttonText = if (index < buttonNames.size) buttonNames[index] else ""
-                    val buttonImage = if (index < buttonImages.size) buttonImages[index] else R.drawable.pointer_green
-
-                    // Create individual button
-                    GridButton(
-                        selected = isSelected,
-                        onClick = {
-                            // Toggle button selection
-                            if (isSelected) {
-                                selectedButtons.remove(index)
-                            } else {
-                                if (selectedButtons.size < 3) {
-                                    selectedButtons.add(index)
-                                }
-                            }
-                        },
-                        buttonText = buttonText,
-                        image = buttonImage,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-            }
-        }
-    }
-}
+//@Composable
+//fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: List<Int>) {
+//    val selectedButtons = remember { mutableStateListOf<Int>() }
+//
+//    Column(
+//        modifier = Modifier.padding(top = 8.dp)
+//    ) {
+//        // Display grid name
+//        Text(
+//            text = gridName,
+//            fontSize = 16.sp,
+//            color = Color.Black,
+//            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+//        )
+//
+//        // Create a grid of buttons
+//        for (rowIndex in 0 until 3) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceEvenly
+//            ) {
+//                for (columnIndex in 0 until 3) {
+//                    val index = rowIndex * 3 + columnIndex
+//                    val isSelected = selectedButtons.contains(index)
+//                    val buttonText = if (index < buttonNames.size) buttonNames[index] else ""
+//                    val buttonImage = if (index < buttonImages.size) buttonImages[index] else R.drawable.pointer_green
+//
+//                    // Create individual button
+//                    GridButton(
+//                        selected = isSelected,
+//                        onClick = {
+//                            // Toggle button selection
+//                            if (isSelected) {
+//                                selectedButtons.remove(index)
+//                            } else {
+//                                if (selectedButtons.size < 3) {
+//                                    selectedButtons.add(index)
+//                                }
+//                            }
+//                        },
+//                        buttonText = buttonText,
+//                        image = buttonImage,
+//                        modifier = Modifier.padding(8.dp)
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}
 
 
 

@@ -27,21 +27,20 @@ object Validator {
         )
     }
 
-    fun validatePassword(password: String): ValidationResult{
+    fun validatePassword(password: String): ValidationResult {
+        val regex = Regex("^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=\\S+$).{6,}$")
         return ValidationResult(
-            (!password.isNullOrEmpty() && password.length>=6)
+            password.matches(regex)
         )
     }
 
-    fun validateConfirmPassword(password: String, confirmPassword : String) : ValidationResult{
+    fun validateConfirmPassword(password: String, confirmPassword: String): ValidationResult {
+        val regex = Regex("^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=\\S+$).{6,}$")
         return ValidationResult(
-            (!password.isNullOrEmpty() && password.length>=6 && !confirmPassword.isNullOrEmpty() && confirmPassword.length>=6 &&
-                    password.equals(confirmPassword)
-                    )
-
-
+            password.matches(regex) && password == confirmPassword
         )
     }
+
     fun validatePrivacyPolicyAcceptance(statusValue:Boolean):ValidationResult{
         return ValidationResult(
             statusValue

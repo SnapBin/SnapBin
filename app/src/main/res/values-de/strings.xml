@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">SnapBin</string>
     <string name="Title">SnapBin</string>
-    <string name="Welcome">Create your Account</string>
-    <string name="FirstName">FirstName</string>
+    <string name="Welcome">Erstelle deinen Account</string>
+    <string name="FirstName">Vorname</string>
     <string name="Hide_password">Hide Password</string>
     <string name="Show_Password">Show Password</string>
-    <string name="Lastname">Lastname</string>
+    <string name="Lastname">Nachname</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="Re_confirm">Re-Type Password</string>
@@ -32,17 +32,15 @@
     <string name="word_delete">Delete</string>
     <string name="label_go_back">Go back</string>
     <string name="error_home_no_network">There is no internet connection available. Some features (like Map and Snap sending) will be restricted.</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+    <string name="first_name">Vorname</string>
+    <string name="last_name">Nachname</string>
     <string name="email">Email</string>
     <string name="birth_date">Birth date</string>
     <string name="phone_number">Phone number</string>
-    <string name="change_profile_photo">Change Profile Photo</string>
-    <string name="take_or_upload_a_photo">"take or upload a photo "</string>
-    <string name="take_a_photo">Take A photo</string>
-    <string name="upload_photo">" Upload photo"</string>
-    <string name="edit">Edit</string>
-    <string name="welcome">Welcome</string>
-    <string name="password">Password</string>
+    <string name="change_profile_photo">Profilfoto ändern</string>
+    <string name="take_or_upload_a_photo">Machen Sie ein Foto oder laden Sie es hoch</string>
+    <string name="take_a_photo">Mach ein Foto</string>
+    <string name="upload_photo">Foto hochladen</string>
+    <string name="edit">Bearbeiten</string>
 
 </resources>

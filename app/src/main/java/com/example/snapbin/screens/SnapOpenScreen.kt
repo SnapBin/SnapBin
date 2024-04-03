@@ -176,16 +176,6 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                     }
 
                 }
-
-                /* previous code just Location
-                Text(text = stringResource(com.snaptrash.snaptrash.R.string.word_location), fontSize = 18.sp)
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
-                    fontSize = 16.sp,
-                )
-    
-                 */
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(text = "Description", fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(5.dp))
@@ -193,12 +183,9 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                     Modifier
                         .height((configuration.screenHeightDp * 0.25).dp)
                         .fillMaxWidth()
-                        //.aspectRatio(1.0f) // fixed aspect ratio
-                        //.clip(RoundedCornerShape(8.dp))
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.onBackground,
-                            //shape = RoundedCornerShape(8.dp)
                         )
                         .background(color = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
@@ -233,10 +220,6 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(25.dp))
-//                Button(onClick = { vm.doSnapFunction();navController.navigate(Routes.HOME_SCREEN)}) {
-//                    Text(text = "Map Screen")
-//                }
-
                 Button(onClick = {
 
                     storeSnapInfo(

@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,6 +49,7 @@ import com.example.snapbin.helper.MapHelper
 import com.example.snapbin.helper.connectivityState
 import com.example.snapbin.model.MainNavViewModel
 import com.example.snapbin.view.map.MapView
+import com.example.snapbin.widgets.LanguageSelector
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -96,13 +98,18 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
                         "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
-                        "listScreen" -> navController.navigate(Routes.ListSnapScreen)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()
                     }
 
                 })
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp)){
+                LanguageSelector()
+            }
         }
 
     ){paddingValues ->

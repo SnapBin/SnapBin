@@ -156,6 +156,7 @@ fun CreateEventScreen(
                         "volunteerScreen" -> navController.navigate(Routes.VOLUNTEER_SCREEN)
                         "reportScreen" -> navController.navigate(Routes.REPORT_SCREEN)
                         "accountScreen" -> navController.navigate(Routes.ACCOUNT_SCREEN)
+                        "mapScreen" -> navController.navigate(Routes.MAP_SCREEN)
                     }
                     coroutineScope.launch {
                         scaffoldState.drawerState.close()

@@ -19,7 +19,6 @@ import com.example.snapbin.screens.CreateEventScreen
 import com.example.snapbin.screens.DeviceImage
 import com.example.snapbin.screens.EditScreen
 import com.example.snapbin.screens.HomeScreen
-import com.example.snapbin.screens.ListSnapScreen
 import com.example.snapbin.screens.LoginScreen
 import com.example.snapbin.screens.MapScreen
 import com.example.snapbin.screens.OpenSnapScreen
@@ -84,9 +83,6 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
             }
             composable(Routes.CHECK_EVENT){
                 CheckEventScreen(navController)
-            }
-            composable(Routes.ListSnapScreen){
-                ListSnapScreen(mainNavViewModel.snapList,navController,false)
             }
 
             composable(Routes.SnapScreenInfo){
