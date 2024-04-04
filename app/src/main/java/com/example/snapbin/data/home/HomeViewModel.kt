@@ -5,7 +5,6 @@ import android.location.Location
 import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Report
@@ -51,12 +50,6 @@ class HomeViewModel : ViewModel() {
             description = "Map Screen",
             itemId = "mapScreen"
         ),
-        NavigationItem(
-            title = "List",
-            icon = Icons.Default.FilterList,
-            description = "List Screen",
-            itemId = "listScreen"
-        )
 
     )
 

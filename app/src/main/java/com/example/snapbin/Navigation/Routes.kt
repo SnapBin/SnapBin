@@ -15,4 +15,8 @@ object Routes {
     const val CHECK_EVENT = "CHECK_EVENT"
     const val ListSnapScreen = "ListSnapScreen"
     const val SnapScreenInfo = "SnapScreenInfo"
+    const val myreportscreen = "myreportscreen"
+    const val savedreports = "savedreports"
+    const val deletedreports = "deletedreports"
+    const val nearbyreports = "nearbyreports"
 }

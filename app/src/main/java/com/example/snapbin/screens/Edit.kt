@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun EditScreen(navController: NavController,profileViewModel: ProfileViewModel =
             modifier = Modifier.background(Color.Blue),
             title = { Text(
                 modifier = Modifier.padding(top=10.dp, start = 20.dp),
-                text="Edit" ,
+                text= stringResource(R.string.edit1) ,
                 fontSize = 30.sp ,
                 fontWeight= FontWeight.Bold,
                 color= Color.White)
@@ -170,7 +171,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
         ) {
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
-                label = { Text(text = "First Name") },
+                label = { Text(text = stringResource(R.string.first_name)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Person,
@@ -181,7 +182,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
-                label = { Text(text = "Last Name") },
+                label = { Text(text = stringResource(R.string.last_name))},
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Person,
@@ -191,7 +192,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                 value = lastName, onValueChange = {}, readOnly = true
             )
             TextField(modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
-                label = { Text(text = "Email") },
+                label = { Text(text = stringResource(R.string.email)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
@@ -206,7 +207,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
                 singleLine = true,
-                label = { Text(text = "date of birth ") },
+                label = { Text(text = stringResource(R.string.date_of_birth)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.DateRange,
@@ -221,7 +222,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
-                label = { Text(text = " phone number ") },
+                label = { Text(text =  stringResource(R.string.phone_number)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Call,

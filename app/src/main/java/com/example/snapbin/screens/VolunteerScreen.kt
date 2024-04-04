@@ -98,7 +98,7 @@ fun VolunteerScreen(navController: NavHostController, homeViewModel: HomeViewMod
                             .padding(16.dp)
                             .size(200.dp) // Adjust the size as needed
                     ) {
-                        Text(text = "Check Event")
+                        Text(text = stringResource(R.string.check_event))
                     }
 
                     // Add the second clickable button
@@ -111,7 +111,7 @@ fun VolunteerScreen(navController: NavHostController, homeViewModel: HomeViewMod
                             .padding(16.dp)
                             .size(200.dp) // Adjust the size as needed
                     ) {
-                        Text(text = "Create an Event")
+                        Text(text = stringResource(R.string.create_an_event))
                     }
                 }
             }

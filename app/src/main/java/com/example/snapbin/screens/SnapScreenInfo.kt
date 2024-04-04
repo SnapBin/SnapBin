@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -67,7 +68,7 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Size of Trash",
+            text = stringResource(R.string.size_of_trash),
             fontSize = 20.sp,
             color = colorResource(id = R.color.Bar_Color),
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
@@ -81,7 +82,7 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
         )
         Spacer(modifier = Modifier.height(16.dp)) // Add spacing between the two button sections
         Text(
-            text = "Type of Trash",
+            text = stringResource(R.string.type_of_trash),
             fontSize = 20.sp,
             color = colorResource(id = R.color.Bar_Color),
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
@@ -139,6 +140,7 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
 
     }
 }
+
 fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
     val db = Firebase.firestore
     val snapInfo = hashMapOf(
@@ -174,7 +176,7 @@ fun ThreeRoundButtons(
             onClick = { onButtonClicked1(0) },
             modifier = Modifier.padding(8.dp),
             image = painterResource(id = R.drawable.bag),
-            buttonText = "Fits in the bag",
+            buttonText = stringResource(R.string.fits_in_the_bag),
             buttonIndex = 0
         )
         RoundButton(
@@ -182,7 +184,7 @@ fun ThreeRoundButtons(
             onClick = { onButtonClicked1(1) },
             modifier = Modifier.padding(8.dp),
             image = painterResource(id = R.drawable.wheelborrow),
-            buttonText = "Fits in a wheelbarrow",
+            buttonText = stringResource(R.string.fits_in_a_wheelbarrow),
             buttonIndex = 1
         )
         RoundButton(
@@ -190,7 +192,7 @@ fun ThreeRoundButtons(
             onClick = { onButtonClicked1(2) },
             modifier = Modifier.padding(8.dp),
             image = painterResource(id = R.drawable.car),
-            buttonText = "Car Needed",
+            buttonText = stringResource(R.string.car_needed),
             buttonIndex = 2
         )
     }
@@ -215,7 +217,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(0) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.household),
-                buttonText = "HouseHold",
+                buttonText = stringResource(R.string.household),
                 buttonIndex = 0
             )
             RoundButton(
@@ -223,7 +225,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(1) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.automotive),
-                buttonText = "Automotive",
+                buttonText = stringResource(R.string.automotive),
                 buttonIndex = 1
             )
             RoundButton(
@@ -231,7 +233,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(2) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.construction),
-                buttonText = "Construction",
+                buttonText = stringResource(R.string.construction),
                 buttonIndex = 2
             )
         }
@@ -244,7 +246,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(3) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.plastic),
-                buttonText = "Plastic",
+                buttonText = stringResource(R.string.plastic),
                 buttonIndex = 3
             )
             RoundButton(
@@ -252,7 +254,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(4) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.ewaste),
-                buttonText = "Electronic",
+                buttonText = stringResource(R.string.electronic),
                 buttonIndex = 4
             )
             RoundButton(
@@ -260,7 +262,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(5) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.organic),
-                buttonText = "Organic",
+                buttonText = stringResource(R.string.organic),
                 buttonIndex = 5
             )
         }
@@ -273,7 +275,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(6) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.metal),
-                buttonText = "Metal",
+                buttonText = stringResource(R.string.metal),
                 buttonIndex = 6
             )
             RoundButton(
@@ -281,7 +283,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(7) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.liquid),
-                buttonText = "Liquid",
+                buttonText = stringResource(R.string.liquid),
                 buttonIndex = 7
             )
             RoundButton(
@@ -289,7 +291,7 @@ fun NineRoundButtons(
                 onClick = { onButtonClicked(8) },
                 modifier = Modifier.padding(8.dp),
                 image = painterResource(id = R.drawable.glasses),
-                buttonText = "Glass",
+                buttonText = stringResource(R.string.glass),
                 buttonIndex = 8
             )
         }
@@ -453,7 +455,7 @@ fun DropDownBar() {
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
             Text(
-                text = if (selectedOption.isEmpty()) "Select an option" else selectedOption,
+                text = if (selectedOption.isEmpty()) stringResource(R.string.select_an_option) else selectedOption,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clip(RoundedCornerShape(50))
@@ -519,7 +521,7 @@ fun SaveSendButton(onClick: () -> Unit) {
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
 
     ) {
-        Text(text = "Save and Send", color = Color.White)
+        Text(text = stringResource(R.string.save_and_send), color = Color.White)
     }
 }
 
@@ -531,7 +533,7 @@ fun DraftButton(onClick: () -> Unit) {
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
     ) {
-        Text(text = "Draft", color = Color.White)
+        Text(text = stringResource(R.string.draft), color = Color.White)
     }
 }
 

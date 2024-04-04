@@ -21,6 +21,7 @@ import com.example.snapbin.screens.EditScreen
 import com.example.snapbin.screens.HomeScreen
 import com.example.snapbin.screens.LoginScreen
 import com.example.snapbin.screens.MapScreen
+import com.example.snapbin.screens.MyReportScreen
 import com.example.snapbin.screens.OpenSnapScreen
 import com.example.snapbin.screens.ReportScreen
 import com.example.snapbin.screens.SignUpScreen
@@ -98,6 +99,9 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
             }
             composable(route="Edit"){
                 EditScreen(navController,profileViewModel)
+            }
+            composable(Routes.myreportscreen){
+                MyReportScreen(navController)
             }
         }
 

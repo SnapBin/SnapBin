@@ -83,7 +83,7 @@ data class Event(
     val endDate: String,
     val equipmentProvided: String,
     val organisedBy: String,
-    val locationaddress: String,)
+    val locationaddress: String)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun CreateEventScreen(
@@ -183,7 +183,7 @@ fun CreateEventScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "Event Name",
+                    Text(text = stringResource(R.string.event_name),
                         fontSize = 16.sp,
                         modifier = Modifier.padding(end = 10.dp)
                     )
@@ -242,7 +242,7 @@ fun CreateEventScreen(
                             .fillMaxWidth()
                             .padding(top = 10.dp)
                     ) {
-                        Text(text = "Live Location")
+                        Text(text = stringResource(R.string.live_location))
                     }
                     // Display live location coordinates
                     Text(text = locationText)
@@ -250,11 +250,11 @@ fun CreateEventScreen(
 
 //                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Meeting Point/Cleaning Location",
+                        text = stringResource(R.string.meeting_point_cleaning_location),
                         fontSize = 16.sp,
                         modifier = Modifier.padding(top = 10.dp)
                     )
-                    LocationComponent(labelValue = "Enter the address", onTextSelected = {locationaddress = it} )
+                    LocationComponent(labelValue = stringResource(R.string.enter_the_address), onTextSelected = {locationaddress = it} )
 //                    Spacer(modifier = Modifier.height(8.dp))
                     Box(
                         modifier = Modifier
@@ -272,7 +272,7 @@ fun CreateEventScreen(
                             horizontalAlignment = Alignment.Start
                         ) {
                             Text(
-                                text = "Meeting Date/Time",
+                                text = stringResource(R.string.meeting_date_time),
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(end = 10.dp)
                             )
@@ -283,7 +283,7 @@ fun CreateEventScreen(
                                 modifier = Modifier.padding(top = 16.dp)
                             ) {
                                 Text(
-                                    text = "Start Date/Time: ",
+                                    text = stringResource(R.string.start_date_time),
                                     fontSize = 14.sp,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -303,7 +303,7 @@ fun CreateEventScreen(
                                 modifier = Modifier.padding(top = 10.dp)
                             ) {
                                 Text(
-                                    text = "End Date/Time: ",
+                                    text = stringResource(R.string.end_date_time),
                                     fontSize = 14.sp,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -323,7 +323,7 @@ fun CreateEventScreen(
 //                    Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Equipment Provided",
+                        text = stringResource(R.string.equipment_provided),
                         fontSize = 16.sp,
                         modifier = Modifier.padding(top = 16.dp)
                     )
@@ -332,7 +332,7 @@ fun CreateEventScreen(
 //                    Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
-                        text = "Organised Community",
+                        text = stringResource(R.string.organised_community),
                         fontSize = 16.sp,
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -358,7 +358,7 @@ fun CreateEventScreen(
                             .fillMaxWidth()
                             .padding(top = 16.dp)
                     ) {
-                        Text(text = "Create Event")
+                        Text(text = stringResource(R.string.create_event))
                     }
 
 

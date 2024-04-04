@@ -157,7 +157,7 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                 }
                 Row(){
                     Column(){
-                        Text(text = "Location", fontSize = 18.sp)
+                        Text(text = stringResource(R.string.location), fontSize = 18.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
                             text = "${"%.${4}f".format(snap.location.latitude)}, ${"%.${4}f".format(snap.location.longitude)}",
@@ -167,7 +167,7 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                     }
                     Spacer(modifier = Modifier.width(40.dp))
                     Column(){
-                        Text(text = "Date", fontSize = 18.sp)
+                        Text(text = stringResource(R.string.date), fontSize = 18.sp)
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(text = snap.getFormattedDate(),
                             color = MaterialTheme.colorScheme.inverseSurface,
@@ -177,7 +177,7 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
 
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                Text(text = "Description", fontSize = 18.sp)
+                Text(text = stringResource(R.string.description), fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(5.dp))
                 Box(
                     Modifier
@@ -196,7 +196,7 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                         onValueChange ={vm.description.value = it})
                 }
                 Spacer(Modifier.height(20.0.dp))
-                Text("Urgency",fontSize = 18.sp)
+                Text(stringResource(R.string.urgency),fontSize = 18.sp)
                 Slider(
                     value = vm.urgency.value.value.toFloat(),
                     enabled = isNew ,
@@ -239,7 +239,7 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
                         .height(70.dp) // Adjust the height as needed
                         .fillMaxWidth() // Make the button fill the available width
                 ) {
-                    Text(text = "Trash Info",color = colorResource(id = R.color.black), // Set the text color to black
+                    Text(text = stringResource(R.string.trash_info),color = colorResource(id = R.color.black), // Set the text color to black
                         fontSize = 20.sp )
                 }
             }

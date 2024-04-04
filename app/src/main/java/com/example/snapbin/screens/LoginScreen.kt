@@ -39,6 +39,7 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.login.LoginUIEvent
 import com.example.snapbin.data.login.LoginViewModel
+import com.example.snapbin.widgets.LanguageSelector
 
 @Composable
 fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel = viewModel()) {
@@ -55,7 +56,7 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
         ){
             Column(modifier = Modifier.fillMaxSize()) {
                 NormalTextComponents(value = stringResource(R.string.Title))
-                WelcomeComponent(value = stringResource(R.string.welcome))
+                WelcomeComponent(value = stringResource(R.string.WelcomeLogin))
                 Spacer(modifier = Modifier.height(5.dp))
                 // Adding the Box composable for centering the image
                 Box(
@@ -82,7 +83,7 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
                     errorStatus = loginViewModel.loginUIState.value.emailError
                 )
 
-                PasswordFieldComponent(labelValue = stringResource(R.string.password), imageVector = Icons.Default.Lock,
+                PasswordFieldComponent(labelValue = stringResource(R.string.Password), imageVector = Icons.Default.Lock,
                     onTextSelected = {
                         loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
 
@@ -107,6 +108,7 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
                     navController.navigate(Routes.SIGNUP_SCREEN)
 
                 })
+                LanguageSelector()
             }
 
         }

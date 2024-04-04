@@ -56,31 +56,27 @@ class LoginViewModel : ViewModel(){
     }
 
     private fun login() {
-        loginInProgress.value=true
+        loginInProgress.value = true
         val email = loginUIState.value.email
         val password = loginUIState.value.password
-        FirebaseAuth
-            .getInstance()
-            .signInWithEmailAndPassword(email,password)
-            .addOnCompleteListener{
 
-                Log.d(TAG, "Inside_LoginSuccess")
-                Log.d(TAG, "${it.isSuccessful}")
-
-                if(it.isSuccessful){
-                    loginInProgress.value=false
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // User is authenticated successfully
+                    loginInProgress.value = false
+                    // Navigate to the home screen or perform any other action
                     SnapBinAppRoute.navigateTo(Screen.HomeScreen)
+                } else {
+                    // Authentication failed
+                    loginInProgress.value = false
+                    // Display an error message to the user indicating invalid credentials
+                    Log.d(TAG, "Authentication failed: ${task.exception?.message}")
                 }
-
             }
-            .addOnFailureListener{
-                Log.d(TAG, "Inside_LoginFailure")
-                Log.d(TAG, it.localizedMessage)
-                loginInProgress.value=false
-
-            }
-
     }
+
+
 
 
 }

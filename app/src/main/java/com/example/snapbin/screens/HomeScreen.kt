@@ -178,7 +178,7 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
 
                         ) {
                             Text(
-                                text = "Take A snap",
+                                text = stringResource(R.string.take_a_snap),
                                 fontSize = 26.sp,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
@@ -206,8 +206,8 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                             Text(
                                 if(!locationEnabled.status.isGranted ||
                                     !cameraPermission.status.isGranted)
-                                    "Button Request permission"
-                                else "Turn on Location",
+                                    stringResource(R.string.button_request_permission)
+                                else stringResource(R.string.turn_on_location),
                                 fontSize = 26.sp,
                                 lineHeight = 26.sp,
                                 textAlign = TextAlign.Center,
