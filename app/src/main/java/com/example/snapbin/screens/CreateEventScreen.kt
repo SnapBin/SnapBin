@@ -76,6 +76,7 @@ class CreateEventViewModel : ViewModel() {
             }
     }
 }
+
 data class Event(
     val about: String,
     val location: String,
@@ -351,6 +352,7 @@ fun CreateEventScreen(
                                 locationaddress = locationaddress,
                             )
                             createEventViewModel.createEvent(event)
+
                             // Navigate to checkEvent screen
                             navController.navigate(Routes.HOME_SCREEN)
                         },

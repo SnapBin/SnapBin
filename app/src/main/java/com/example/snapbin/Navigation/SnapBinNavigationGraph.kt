@@ -19,9 +19,9 @@ import com.example.snapbin.screens.CreateEventScreen
 import com.example.snapbin.screens.DeviceImage
 import com.example.snapbin.screens.EditScreen
 import com.example.snapbin.screens.HomeScreen
+import com.example.snapbin.screens.ListSnapScreen
 import com.example.snapbin.screens.LoginScreen
 import com.example.snapbin.screens.MapScreen
-import com.example.snapbin.screens.MyReportScreen
 import com.example.snapbin.screens.OpenSnapScreen
 import com.example.snapbin.screens.ReportScreen
 import com.example.snapbin.screens.SignUpScreen
@@ -101,7 +101,7 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
                 EditScreen(navController,profileViewModel)
             }
             composable(Routes.myreportscreen){
-                MyReportScreen(navController)
+                ListSnapScreen(mainNavViewModel.snapList,navController,true)
             }
         }
 

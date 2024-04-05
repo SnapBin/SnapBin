@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
@@ -44,10 +42,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -129,14 +126,16 @@ fun AccountScreen(navController: NavHostController, homeViewModel: HomeViewModel
                         .fillMaxSize()
                 ){
                     MiddleBox()
+                    FetchImage(profileViewModel.userId,navController )
+                    InfoBox(profileViewModel.userId)
                     Row(
-                        modifier= Modifier.padding(horizontal = 68.dp, vertical = 120.dp) ,
-                        horizontalArrangement = Arrangement.spacedBy(20.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 120.dp),
+                        horizontalArrangement = Arrangement.Center // Center align items horizontally
                     ) {
                         EditButton(navController)
                     }
-                    FetchImage(profileViewModel.userId,navController )
-                    InfoBox(profileViewModel.userId)
                 }
 
             }
@@ -439,18 +438,19 @@ fun ProfileImage(navController: NavController, urlImage : String){
 }
 
 @Composable
-fun EditButton(navController: NavController){
-
+fun EditButton(navController: NavHostController) {
     Button(
-        onClick = { navController.navigate("Edit")},
-        modifier = Modifier.width(width=120.dp)
+        onClick = {
+            // Handle edit button click action
+            navController.navigate("Edit") },
+        modifier = Modifier
+            .size(80.dp)
+            .padding(8.dp) // Adjust padding as needed
+            .clip(CircleShape), // Clip the button to make it rounded
+        shape = CircleShape, // Set the shape to CircleShape for rounding
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)), // Set button color
     ) {
-        Row(
-        ){
-            Text(text= stringResource(R.string.edit), fontSize = 13.sp,color = MaterialTheme.colors.onSurface)
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Icon(painter = painterResource(id = R.drawable.final_logo ) , contentDescription = "Edit Icon" , modifier= Modifier.size(15.dp))
-        }
-
+        Text(text = stringResource(id = R.string.edit1))
     }
 }
+

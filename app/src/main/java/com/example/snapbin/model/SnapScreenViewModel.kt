@@ -32,6 +32,9 @@ class SnapScreenViewModel: ViewModel() {
     var description = mutableStateOf("")
     var aboutevent = mutableStateOf("")
     var urgency = mutableStateOf(Urgency.NOT_URGENT)
+    var sizetrash = mutableStateOf("")
+    var typeTrash = mutableStateOf("")
+    var reprtby = mutableStateOf("")
     var error : MutableState<Int?> = mutableStateOf(null)
     var inProgress = mutableStateOf(false)
     lateinit var navController: NavController
@@ -42,7 +45,7 @@ class SnapScreenViewModel: ViewModel() {
             val filename = "/snapImages/${Firebase.auth.uid}/${LocalDateTime.now()}.jpg"
             Firebase.storage.getReference(filename).putFile(snapUrl.value).addOnSuccessListener {
                 val snap = Snap("",location.value, Firebase.auth.uid!!,filename,"",
-                    java.util.Date(), description.value,urgency.value,urgency.value, SnapStatus.PENDING)
+                    java.util.Date(), description.value,urgency.value,urgency.value,SnapStatus.PENDING)
                 snap.submitSnap().addOnSuccessListener {
                     inProgress.value = false
                     navController.popBackStack(Routes.HOME_SCREEN,false)

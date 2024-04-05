@@ -50,6 +50,8 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.model.SnapScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -143,23 +145,94 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
 
 fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
     val db = Firebase.firestore
-    val snapInfo = hashMapOf(
-        "sizeOfTrash" to sizeOfTrash,
-        "typeOfTrash" to typeOfTrash, 
-        "reportBy" to reportBy
-    )
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    Log.d(TAG, "userID is $userId")
+//    val snapInfo = hashMapOf(
+//        "sizeOfTrash" to sizeOfTrash,
+//        "typeOfTrash" to typeOfTrash,
+//        "reportBy" to reportBy
+//    )
+    val query = db.collection("snapInfo")
+        .whereEqualTo("userId", userId)
+        .orderBy("datetime", Query.Direction.DESCENDING)
+        .limit(1)
+    println(query)
+    Log.d(TAG, "Data is $query")
+    // Execute the query asynchronously
+    query.get()
+        .addOnSuccessListener { querySnapshot ->
+            // Check if there are any documents returned
+            if (!querySnapshot.isEmpty) {
+                // Get the first document from the result
+                val documentSnapshot = querySnapshot.documents[0]
+                val documentId = documentSnapshot.id
+                print(documentId)
 
-    // Add a new document with a generated ID
-    db.collection("snapInfo")
-        .add(snapInfo)
-        .addOnSuccessListener { documentReference ->
-            // Log successful addition
-            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                // Get the data from the document
+                val data = documentSnapshot.data // Get the HashMap from the DocumentSnapshot
+                var location = ""
+                var userId = ""
+                var description = ""
+                var urgency = ""
+
+// Check if data is not null and contains the key
+                if (data != null && data.contains("userId")) {
+                    userId = data["userId"].toString()
+                }
+                if (data != null && data.contains("location")) {
+                    location = data["location"].toString()
+                }
+                if (data != null && data.contains("description")) {
+                    description = data["description"].toString()
+                }
+                if (data != null && data.contains("urgency")) {
+                    urgency = data["urgency"].toString()
+                }
+                val snapInfo = hashMapOf(
+                    "sizeOfTrash" to sizeOfTrash,
+                    "typeOfTrash" to typeOfTrash,
+                    "reportBy" to reportBy,
+                    "userId" to userId,
+                    "location" to location,
+                    "datetime" to java.util.Date(),
+                    "description" to description,
+                    "urgency" to urgency
+                )
+                // Construct the reference to the document
+                val docRef = db.collection("snapInfo").document(documentId)
+
+// Append snapInfo data to the existing document
+                docRef.update(snapInfo as Map<String, Any>)
+                    .addOnSuccessListener {
+                        // Handle success
+                        println("snapInfo data appended successfully.")
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle failure
+                        println("Error appending snapInfo data: $e")
+                    }
+
+                // Print or log the data
+                Log.d(TAG, "Data is $data")
+            } else {
+                Log.d(TAG, "No data found")
+            }
         }
-        .addOnFailureListener { e ->
-            // Log failure
-            Log.w(TAG, "Error adding document", e)
+        .addOnFailureListener { exception ->
+            Log.e(TAG, "Error getting documents: ", exception)
         }
+
+//    // Add a new document with a generated ID
+//    db.collection("snapInfo")
+//        .add(snapInfo)
+//        .addOnSuccessListener { documentReference ->
+//            // Log successful addition
+//            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+//        }
+//        .addOnFailureListener { e ->
+//            // Log failure
+//            Log.w(TAG, "Error adding document", e)
+//        }
 }
 
 @Composable

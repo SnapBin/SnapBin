@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.snapbin.Components.AppToolbar
 import com.example.snapbin.Components.NavigationDrawerBody
@@ -25,6 +28,8 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import com.example.snapbin.model.MainNavViewModel
+import com.example.snapbin.model.data.Snap
+import com.example.snapbin.view.SnapCard
 import kotlinx.coroutines.launch
 
 @Composable
@@ -87,9 +92,24 @@ fun MyReportScreen(navController: NavHostController, homeViewModel: HomeViewMode
                 ) {
 
 
+
                 }
             }
         }
     }
 }
 
+@Composable
+fun ListSnapScreen(snapList: List<Snap>, navController: NavController, isHistory: Boolean){
+    val state = rememberLazyListState()
+    LazyColumn(modifier = Modifier.fillMaxSize()){
+        snapList.filter {(isHistory) }.
+        forEach {
+            item {
+                SnapCard(snap = it,onClick = {
+                    navController.navigate(Routes.SINGLE_SNAP.replace("{snap}",it.encodeForNavigation()))
+                })
+            }
+        }
+    }
+}

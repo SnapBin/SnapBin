@@ -82,6 +82,11 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                 }
             )
         },
+        floatingActionButton = {
+            if(currentBackStack.value?.destination?.route?.contains(Routes.SINGLE_SNAP) == true){
+                vm.currentFloatingActionButton.value()
+            }
+        },
 //        floatingActionButton = {
 //            if(navController.currentBackStackEntryAsState().value?.destination?.route?.contains(Routes.SINGLE_SNAP) == true){
 //                vm.currentFloatingActionButton.value()

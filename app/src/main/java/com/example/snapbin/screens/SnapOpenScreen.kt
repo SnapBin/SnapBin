@@ -60,6 +60,7 @@ import com.example.snapbin.model.SnapScreenViewModel
 import com.example.snapbin.model.data.Snap
 import com.example.snapbin.model.data.Urgency
 import com.example.snapbin.view.ErrorCard
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.net.URLDecoder
@@ -253,12 +254,16 @@ fun OpenSnapScreen(snap: Snap, navController: NavController, mainNavViewModel: M
 
 fun storeSnapInfo(location: String, datetime: Date, description: String, urgency: String) {
     val db = Firebase.firestore
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    Log.d(TAG, "userID is $userId")
     val snapInfo = hashMapOf(
+        "userId" to userId,
         "location" to location,
         "datetime" to datetime,
         "description" to description,
         "urgency" to urgency
     )
+
 
     // Add a new document with a generated ID
     db.collection("snapInfo")
