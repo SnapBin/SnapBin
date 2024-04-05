@@ -44,7 +44,6 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import com.example.snapbin.model.MainNavViewModel
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -52,7 +51,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @Composable
-fun MyReportScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel(), mainNavViewModel: MainNavViewModel = viewModel()) {
+fun NearbyReport(navController: NavHostController, homeViewModel: HomeViewModel = viewModel(), mainNavViewModel: MainNavViewModel = viewModel()) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -109,7 +108,7 @@ fun MyReportScreen(navController: NavHostController, homeViewModel: HomeViewMode
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Myreportlistscreen()
+                    Nearbylistscreen()
 
 
                 }
@@ -117,9 +116,7 @@ fun MyReportScreen(navController: NavHostController, homeViewModel: HomeViewMode
         }
     }
 }
-
-data class Myreport(
-    val id : String,
+data class Nearbyreport(
     val userId: String,
     val location: String,
 //    val datetime: Date,
@@ -131,8 +128,8 @@ data class Myreport(
 
 
 @Composable
-fun Myreportlistscreen() {
-    val snapinfo by Fetchmyreport()
+fun Nearbylistscreen() {
+    val snapinfo by fetchnearByreport()
     var selectedCategory by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -140,29 +137,29 @@ fun Myreportlistscreen() {
             .padding(16.dp)
     ) {
         var selectedEvent by remember {
-            mutableStateOf<Myreport?>(null)
+            mutableStateOf<Nearbyreport?>(null)
         }
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(snapinfo) { event -> // Use events.value instead of events
-                MyReportCard(myreports = event) { // Provide onClick lambda here
+                ReportCard(NearReports = event) { // Provide onClick lambda here
                     selectedEvent = event
                 }
             }
         }
         if (selectedEvent != null) {
-            MyreportdetailDialogue(
-                myreports  = selectedEvent,
+            NeardetailDialogue(
+                NearReports  = selectedEvent,
                 onDismiss = { selectedEvent = null }
             )
         }
     }
 }
 @Composable
-fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
-    if (myreports != null) {
+fun NeardetailDialogue(NearReports: Nearbyreport?, onDismiss: () -> Unit) {
+    if (NearReports != null) {
         Dialog(onDismissRequest = onDismiss) {
             Card(
                 modifier = Modifier
@@ -176,17 +173,14 @@ fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
                     modifier = Modifier.padding(16.dp)
                 ) {
 //                    Text(text = "dateTime: ${NearReports.datetime}", color = Color.Black)
-                    Text(text = "Description: ${myreports.description}", color = Color.Black)
-                    Text(text = "Urgency : ${myreports.urgency}", color = Color.Black)
-                    Text(text = "sizeOfTrash: ${myreports.sizeOfTrash}", color = Color.Black)
-                    Text(text = "Type of Trash: ${myreports.typeOfTrash}", color = Color.Black)
-                    Text(text = "reportBy : ${myreports.reportBy}", color = Color.Black)
+                    Text(text = "Description: ${NearReports.description}", color = Color.Black)
+                    Text(text = "Urgency : ${NearReports.urgency}", color = Color.Black)
+                    Text(text = "sizeOfTrash: ${NearReports.sizeOfTrash}", color = Color.Black)
+                    Text(text = "Type of Trash: ${NearReports.typeOfTrash}", color = Color.Black)
+                    Text(text = "reportBy : ${NearReports.reportBy}", color = Color.Black)
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = onDismiss) {
                         Text("Close")
-                    }
-                    Button(onClick = onDismiss ) {
-                        Text("Cleaned")
                     }
                 }
             }
@@ -194,7 +188,7 @@ fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
     }
 }
 @Composable
-fun MyReportCard(myreports: Myreport, onClick: () -> Unit) {
+fun ReportCard(NearReports: Nearbyreport, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -207,32 +201,31 @@ fun MyReportCard(myreports: Myreport, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = myreports.location,
+                text = NearReports.location,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = Color.Black
             )
 //            Text(text = "dateTime: ${NearReports.datetime}", color = Color.Black)
-            Text(text = "Description: ${myreports.description}", color = Color.Black)
-            Text(text = "Urgency : ${myreports.urgency}", color = Color.Black)
-            Text(text = "sizeOfTrash: ${myreports.sizeOfTrash}", color = Color.Black)
-            Text(text = "Type of Trash: ${myreports.typeOfTrash}", color = Color.Black)
-            Text(text = "reportBy : ${myreports.reportBy}", color = Color.Black)
+            Text(text = "Description: ${NearReports.description}", color = Color.Black)
+            Text(text = "Urgency : ${NearReports.urgency}", color = Color.Black)
+            Text(text = "sizeOfTrash: ${NearReports.sizeOfTrash}", color = Color.Black)
+            Text(text = "Type of Trash: ${NearReports.typeOfTrash}", color = Color.Black)
+            Text(text = "reportBy : ${NearReports.reportBy}", color = Color.Black)
         }
     }
 }
 @Composable
-fun Fetchmyreport(): State<List<Myreport>> {
-    val offersState = remember { mutableStateOf(emptyList<Myreport>()) }
+fun fetchnearByreport(): State<List<Nearbyreport>> {
+    val offersState = remember { mutableStateOf(emptyList<Nearbyreport>()) }
     //val firestore = FirebaseFirestore.getInstance()
     //val collectionRef = firestore.collection("snapInfo")
 
     val db = Firebase.firestore
-    val userId = Firebase.auth.currentUser?.uid.orEmpty()
 
     LaunchedEffect(true) {
         //var query = collectionRef
-        val query = db.collection("snapInfo").whereEqualTo("userId", userId).orderBy("datetime", Query.Direction.DESCENDING)
+        val query = db.collection("snapInfo").orderBy("datetime", Query.Direction.DESCENDING)
 
         val snapshot = query.get().await()
         val offersList = snapshot.documents.mapNotNull { document ->
@@ -245,8 +238,7 @@ fun Fetchmyreport(): State<List<Myreport>> {
             val sizeOfTrash = document.getString("sizeOfTrash") ?: ""
             val typeOfTrash = document.getString("typeOfTrash") ?: ""
             val reportBy = document.getString("reportBy") ?: ""
-            Myreport(
-                id = id,
+            Nearbyreport(
                 userId = userId,
                 location = location,
 //                datetime = datetime,
@@ -260,5 +252,3 @@ fun Fetchmyreport(): State<List<Myreport>> {
     }
     return offersState
 }
-
-

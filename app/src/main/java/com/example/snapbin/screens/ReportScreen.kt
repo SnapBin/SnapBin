@@ -149,6 +149,7 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                         Button(
                             onClick = {
                                 // Navigate to appropriate screen
+                                navController.navigate(Routes.nearbyreports)
                             },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)),
