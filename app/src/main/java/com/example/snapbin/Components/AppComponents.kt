@@ -490,7 +490,7 @@ fun DividerTextComponent() {
             color = GrayColor,
             thickness = 1.dp)
 
-        Text(modifier = Modifier.padding(8.dp), text = "or", fontSize = 18.sp, color = TextColor)
+        Text(modifier = Modifier.padding(8.dp), text = stringResource(R.string.or), fontSize = 18.sp, color = TextColor)
         Divider(modifier = Modifier
             .fillMaxWidth()
             .weight(1f),
@@ -501,8 +501,10 @@ fun DividerTextComponent() {
 
 @Composable
 fun ClicableLoginTextComponents(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit){
-    val initialText = if(tryingToLogin) "Already have an account? " else "Don't have an account yet? "
-    val loginText = if(tryingToLogin)" Login " else " Register "
+    val initialText = if(tryingToLogin) stringResource(R.string.already_have_an_account) else stringResource(
+        R.string.don_t_have_an_account_yet
+    )
+    val loginText = if(tryingToLogin) stringResource(R.string.login) else stringResource(R.string.register)
 
     val annotedString = buildAnnotatedString {
         append(initialText)
@@ -553,6 +555,23 @@ fun NormalTextComponent(value: String) {
         textDecoration = TextDecoration.Underline
     )
 }
+@Composable
+fun NormalTextComponentTerms(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal
+        ), color = Color.Black,
+        textAlign = TextAlign.Center,
+
+    )
+}
+
 
 @Composable
 fun AppToolbar(toolbarTitle: String, logoutButtonClicked: () -> Unit, navigationIconClicked: () -> Unit){
@@ -630,8 +649,8 @@ fun NavigationDrawerBody(
             }
             item {
                 Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp)){
+                    .fillMaxWidth()
+                    .padding(start = 10.dp)){
                 LanguageSelector()
             }  }
 

@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity() {
                             Log.d("FCM Notify", "Fetching FCM registration token failed", task.exception)
                             return@OnCompleteListener
                         }
-
                         //Get new FCM registration token
                         val token: String? = task.result
                         Log.d("FCM Token", token, task.exception)

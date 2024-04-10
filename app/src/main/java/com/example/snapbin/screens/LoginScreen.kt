@@ -108,7 +108,13 @@ fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel
                     navController.navigate(Routes.SIGNUP_SCREEN)
 
                 })
-                LanguageSelector()
+                // Centering the LanguageSelector
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    LanguageSelector()
+                }
             }
 
         }

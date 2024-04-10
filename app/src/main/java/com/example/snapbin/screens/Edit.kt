@@ -7,18 +7,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -39,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -129,10 +125,13 @@ fun EditBox(profileViewModel: ProfileViewModel) {
     Log.d(TAG, "firebaseuserid is ${userId}")
     var userInfo by remember { mutableStateOf<MutableMap<String, Any>>(mutableMapOf()) }
     var updatedEmail by remember { mutableStateOf("") }
+    var updatefirstname by remember { mutableStateOf("") }
+    var updatedlastname by remember { mutableStateOf("") }
     var updatedBirthDate by remember { mutableStateOf("") }
     var updatedPhoneNumber by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
+    var Email by remember { mutableStateOf("") }
     val context = LocalContext.current
 
 
@@ -143,9 +142,9 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                 val data = documentSnapshot.data
                 if (data != null) {
                     userInfo = data.toMutableMap()
-                    lastName = userInfo.getValue("lastname").toString()
-                    firstName = userInfo.getValue("firstname").toString()
-                    updatedEmail = userInfo.getValue("email").toString()
+                    updatedlastname = userInfo.getValue("lastname").toString()
+                    updatefirstname = userInfo.getValue("firstname").toString()
+                    Email = userInfo.getValue("email").toString()
                     updatedBirthDate = userInfo.getValue("dateofbirth").toString()
                     updatedPhoneNumber = userInfo.getValue("phoneNumber").toString()
                 }
@@ -178,7 +177,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "personIcon"
                     )
                 },
-                value = firstName, onValueChange = {}, readOnly = true
+                value = updatefirstname, onValueChange = {}, readOnly = true
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
@@ -189,7 +188,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "personIcon"
                     )
                 },
-                value = lastName, onValueChange = {}, readOnly = true
+                value = updatedlastname, onValueChange = {}, readOnly = true
             )
             TextField(modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
                 label = { Text(text = stringResource(R.string.email)) },
@@ -199,7 +198,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "emailIcon"
                     )
                 },
-                value = updatedEmail,
+                value = Email,
                 onValueChange = {
                     updatedEmail = it
                 }
@@ -238,20 +237,13 @@ fun EditBox(profileViewModel: ProfileViewModel) {
 
             Button(
                 onClick = {
-                    profileViewModel.updateProfile(updatedEmail,updatedBirthDate,updatedPhoneNumber,context)
-                    profileViewModel.updateEmail(updatedEmail)
-                          },
+                    profileViewModel.updateProfile(updatefirstname,updatedlastname,updatedBirthDate,updatedPhoneNumber,context)
+                },
                 modifier = Modifier.width(width = 120.dp)
             ) {
                 Row(
                 ) {
                     Text(text = "Edit", fontSize = 15.sp)
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Icon(
-                        painter = painterResource(id = R.drawable.final_logo),
-                        contentDescription = "Edit Icon",
-                        modifier = Modifier.size(20.dp)
-                    )
                 }
 
             }

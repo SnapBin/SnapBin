@@ -16,6 +16,7 @@ import com.example.snapbin.screens.CameraPermissionsView
 import com.example.snapbin.screens.CameraScreen
 import com.example.snapbin.screens.CheckEventScreen
 import com.example.snapbin.screens.CreateEventScreen
+import com.example.snapbin.screens.DeletedReports
 import com.example.snapbin.screens.DeviceImage
 import com.example.snapbin.screens.EditScreen
 import com.example.snapbin.screens.HomeScreen
@@ -25,6 +26,7 @@ import com.example.snapbin.screens.MyReportScreen
 import com.example.snapbin.screens.NearbyReport
 import com.example.snapbin.screens.OpenSnapScreen
 import com.example.snapbin.screens.ReportScreen
+import com.example.snapbin.screens.SavedReports
 import com.example.snapbin.screens.SignUpScreen
 import com.example.snapbin.screens.SnapScreenInfo
 import com.example.snapbin.screens.TermsandConditionsScreen
@@ -106,6 +108,12 @@ fun SnapBinNavigationGraph(navController: NavHostController, vm: RootNavViewMode
             }
             composable(Routes.nearbyreports){
                 NearbyReport(navController)
+            }
+            composable(Routes.deletedreports){
+                DeletedReports(navController)
+            }
+            composable(Routes.savedreports){
+                SavedReports(navController)
             }
         }
 

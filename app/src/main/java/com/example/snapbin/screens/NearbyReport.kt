@@ -182,6 +182,9 @@ fun NeardetailDialogue(NearReports: Nearbyreport?, onDismiss: () -> Unit) {
                     Button(onClick = onDismiss) {
                         Text("Close")
                     }
+                    Button(onClick = onDismiss ) {
+                        Text("Cleaned")
+                    }
                 }
             }
         }

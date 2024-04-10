@@ -128,8 +128,6 @@ data class Myreport(
     val sizeOfTrash: String,
     val typeOfTrash: String,
     val reportBy: String)
-
-
 @Composable
 fun Myreportlistscreen() {
     val snapinfo by Fetchmyreport()
@@ -185,7 +183,7 @@ fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
                     Button(onClick = onDismiss) {
                         Text("Close")
                     }
-                    Button(onClick = onDismiss ) {
+                    Button(onClick = { deleteDataFromFirebase() }) {
                         Text("Cleaned")
                     }
                 }
@@ -193,6 +191,25 @@ fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
         }
     }
 }
+
+fun deleteDataFromFirebase() {
+
+    val db = Firebase.firestore
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+
+    db.collection("snapInfo")
+        .document(userId)
+        .delete()
+        .addOnSuccessListener {
+            println("Deleted")
+
+    }.addOnFailureListener {
+
+        println("Not Deleted")
+    }
+
+}
+
 @Composable
 fun MyReportCard(myreports: Myreport, onClick: () -> Unit) {
     Card(
@@ -260,5 +277,6 @@ fun Fetchmyreport(): State<List<Myreport>> {
     }
     return offersState
 }
+
 
 

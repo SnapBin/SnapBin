@@ -9,7 +9,6 @@
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="Re_confirm">Riconferma password</string>
-    <string name="Terms_and_condition">Continuando accetti la nostra Informativa sulla privacy e le Condizioni d\'uso</string>
     <string name="Terms_and_conditions_heading">Condizioni d\'uso</string>
     <string name="Sign_in">Accedi</string>
     <string name="WelcomeLogin">Benvenuto</string>
@@ -82,4 +81,16 @@
     <string name="edit1">Modifica</string>
     <string name="first_name1">Nome</string>
     <string name="date_of_birth">"Data di nascita: "</string>
+    <string name="my_reports">I miei report</string>
+    <string name="saved_reports">Report salvati</string>
+    <string name="deleted_reports">Report eliminati</string>
+    <string name="nearby_reports">Report nelle vicinanze</string>
+    <string name="terms_and_condition">Terms and Condition</string>
+    <string name="already_have_an_account">"Hai già un account? "</string>
+    <string name="or">o</string>
+    <string name="login">"Accedi"</string>
+    <string name="register">"Registrati"</string>
+    <string name="don_t_have_an_account_yet">"Non hai ancora un account?"</string>
+    <string name="Terms_and_condition">Continuando, accetti il nostro</string>
+
 </resources>

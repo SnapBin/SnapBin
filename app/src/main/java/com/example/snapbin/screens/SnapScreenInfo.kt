@@ -147,11 +147,6 @@ fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
     val db = Firebase.firestore
     val userId = Firebase.auth.currentUser?.uid.orEmpty()
     Log.d(TAG, "userID is $userId")
-//    val snapInfo = hashMapOf(
-//        "sizeOfTrash" to sizeOfTrash,
-//        "typeOfTrash" to typeOfTrash,
-//        "reportBy" to reportBy
-//    )
     val query = db.collection("snapInfo")
         .whereEqualTo("userId", userId)
         .orderBy("datetime", Query.Direction.DESCENDING)

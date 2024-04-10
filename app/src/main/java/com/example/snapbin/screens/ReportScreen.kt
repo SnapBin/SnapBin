@@ -111,12 +111,13 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                                 .padding(16.dp)
                                 .size(150.dp)
                         ) {
-                            Text(text = "My Reports")
+                            Text(text = stringResource(R.string.my_reports))
                         }
 
                         Button(
                             onClick = {
                                 // Navigate to appropriate screen
+                                navController.navigate(Routes.savedreports)
                             },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)),
@@ -124,7 +125,7 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                                 .padding(16.dp)
                                 .size(150.dp)
                         ) {
-                            Text(text = "Saved Reports")
+                            Text(text = stringResource(R.string.saved_reports))
                         }
                     }
 
@@ -136,6 +137,7 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                         Button(
                             onClick = {
                                 // Navigate to appropriate screen
+                                navController.navigate(Routes.deletedreports)
                             },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)),
@@ -143,7 +145,7 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                                 .padding(16.dp)
                                 .size(150.dp)
                         ) {
-                            Text(text = "Deleted Reports")
+                            Text(text = stringResource(R.string.deleted_reports))
                         }
 
                         Button(
@@ -157,7 +159,7 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                                 .padding(16.dp)
                                 .size(150.dp)
                         ) {
-                            Text(text = "NearBy Reports")
+                            Text(text = stringResource(R.string.nearby_reports))
                         }
                     }
                 }
