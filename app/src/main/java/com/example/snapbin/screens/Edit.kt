@@ -125,13 +125,10 @@ fun EditBox(profileViewModel: ProfileViewModel) {
     Log.d(TAG, "firebaseuserid is ${userId}")
     var userInfo by remember { mutableStateOf<MutableMap<String, Any>>(mutableMapOf()) }
     var updatedEmail by remember { mutableStateOf("") }
-    var updatefirstname by remember { mutableStateOf("") }
-    var updatedlastname by remember { mutableStateOf("") }
     var updatedBirthDate by remember { mutableStateOf("") }
     var updatedPhoneNumber by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
-    var Email by remember { mutableStateOf("") }
     val context = LocalContext.current
 
 
@@ -142,9 +139,9 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                 val data = documentSnapshot.data
                 if (data != null) {
                     userInfo = data.toMutableMap()
-                    updatedlastname = userInfo.getValue("lastname").toString()
-                    updatefirstname = userInfo.getValue("firstname").toString()
-                    Email = userInfo.getValue("email").toString()
+                    lastName = userInfo.getValue("lastname").toString()
+                    firstName = userInfo.getValue("firstname").toString()
+                    updatedEmail = userInfo.getValue("email").toString()
                     updatedBirthDate = userInfo.getValue("dateofbirth").toString()
                     updatedPhoneNumber = userInfo.getValue("phoneNumber").toString()
                 }
@@ -177,7 +174,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "personIcon"
                     )
                 },
-                value = updatefirstname, onValueChange = {}, readOnly = true
+                value = firstName, onValueChange = {}, readOnly = true
             )
             TextField(
                 modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
@@ -188,7 +185,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "personIcon"
                     )
                 },
-                value = updatedlastname, onValueChange = {}, readOnly = true
+                value = lastName, onValueChange = {}, readOnly = true
             )
             TextField(modifier = Modifier.fillMaxWidth(0.9f), shape = RoundedCornerShape(10.dp),
                 label = { Text(text = stringResource(R.string.email)) },
@@ -198,7 +195,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
                         contentDescription = "emailIcon"
                     )
                 },
-                value = Email,
+                value = updatedEmail,
                 onValueChange = {
                     updatedEmail = it
                 }
@@ -237,7 +234,7 @@ fun EditBox(profileViewModel: ProfileViewModel) {
 
             Button(
                 onClick = {
-                    profileViewModel.updateProfile(updatefirstname,updatedlastname,updatedBirthDate,updatedPhoneNumber,context)
+                    profileViewModel.updateProfile(updatedEmail,updatedBirthDate,updatedPhoneNumber,context)
                 },
                 modifier = Modifier.width(width = 120.dp)
             ) {
