@@ -64,7 +64,7 @@
     <string name="liquid">Flüssigkeit</string>
     <string name="glass">Glas</string>
     <string name="select_an_option">Option auswählen</string>
-    <string name="save_and_send">Speichern und senden</string>
+    <string name="save_and_send">Speichern Bericht</string>
     <string name="draft">Entwurf</string>
     <string name="check_event">Event überprüfen</string>
     <string name="create_an_event">Ein Event erstellen</string>
@@ -82,7 +82,7 @@
     <string name="first_name1">Vorname</string>
     <string name="date_of_birth">"Geburtsdatum: "</string>
     <string name="my_reports">Meine Berichte</string>
-    <string name="saved_reports">Gespeicherte Berichte</string>
+    <string name="saved_reports">Archivberichte</string>
     <string name="deleted_reports">Gelöschte Berichte</string>
     <string name="nearby_reports">Berichte in der Nähe</string>
     <string name="terms_and_condition">Terms and Condition</string>

@@ -86,8 +86,6 @@ fun DeletedReports(navController: NavHostController, homeViewModel: HomeViewMode
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Myreportlistscreen()
-
-
                 }
             }
         }

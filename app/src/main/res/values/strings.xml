@@ -65,7 +65,7 @@
     <string name="liquid">Liquid</string>
     <string name="glass">Glass</string>
     <string name="select_an_option">Select an option</string>
-    <string name="save_and_send">Save and Send</string>
+    <string name="save_and_send">Save Report</string>
     <string name="draft">Draft</string>
     <string name="check_event">Check Event</string>
     <string name="create_an_event">Create an Event</string>
@@ -83,7 +83,7 @@
     <string name="first_name1">First Name</string>
     <string name="date_of_birth">"date of birth "</string>
     <string name="my_reports">My Reports</string>
-    <string name="saved_reports">Saved Reports</string>
+    <string name="saved_reports">Archive Reports</string>
     <string name="deleted_reports">Deleted Reports</string>
     <string name="nearby_reports">NearBy Reports</string>
     <string name="terms_and_condition">Terms and Condition</string>

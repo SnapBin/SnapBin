@@ -1,5 +1,7 @@
 package com.example.snapbin.screens
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -160,6 +162,10 @@ fun Myreportlistscreen() {
 }
 @Composable
 fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
+    var isButtonVisible by remember { mutableStateOf(true) }
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    val adminAccount = "JLvpWlCyRSg6yED3qgjLo9B9Yaz1"
+    isButtonVisible = userId == adminAccount
     if (myreports != null) {
         Dialog(onDismissRequest = onDismiss) {
             Card(
@@ -183,32 +189,57 @@ fun MyreportdetailDialogue(myreports: Myreport?, onDismiss: () -> Unit) {
                     Button(onClick = onDismiss) {
                         Text("Close")
                     }
-                    Button(onClick = { deleteDataFromFirebase() }) {
-                        Text("Cleaned")
+                    if (isButtonVisible){
+                        Button(onClick = {
+                            isButtonVisible=false
+                            deleteDataFromFirebase(myreports) }) {
+                            Text("Cleaned")
+                        }
                     }
                 }
             }
         }
     }
 }
-
-fun deleteDataFromFirebase() {
+fun deleteDataFromFirebase(myreports: Myreport) {
 
     val db = Firebase.firestore
     val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    val snapInfo = hashMapOf(
+        "userId" to userId,
+        "location" to myreports.location,
+//        "datetime" to newDate,
+        "description" to myreports.description,
+        "urgency" to myreports.urgency,
+        "sizeOfTrash" to myreports.sizeOfTrash,
+        "typeOfTrash" to myreports.typeOfTrash,
+        "reportBy" to myreports.reportBy
+    )
 
     db.collection("snapInfo")
-        .document(userId)
+        .document(myreports.id)
         .delete()
         .addOnSuccessListener {
             println("Deleted")
+            // Add a new document with a generated ID
+            db.collection("archievedata")
+                .add(snapInfo)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
+//            Myreportlistscreen()
 
-    }.addOnFailureListener {
 
-        println("Not Deleted")
-    }
+        }.addOnFailureListener {
+
+            println("Not Deleted")
+        }
 
 }
+
 
 @Composable
 fun MyReportCard(myreports: Myreport, onClick: () -> Unit) {

@@ -17,7 +17,11 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,12 +36,18 @@ import com.example.snapbin.Components.NavigationDrawerHeader
 import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 //import androidx.navigation.NavController
 
 @Composable
 fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
+    var isButtonVisible by remember { mutableStateOf(true) }
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    val adminAccount = "JLvpWlCyRSg6yED3qgjLo9B9Yaz1"
+    isButtonVisible = userId == adminAccount
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -113,20 +123,22 @@ fun ReportScreen(navController: NavHostController, homeViewModel: HomeViewModel 
                         ) {
                             Text(text = stringResource(R.string.my_reports))
                         }
-
-                        Button(
-                            onClick = {
-                                // Navigate to appropriate screen
-                                navController.navigate(Routes.savedreports)
-                            },
-                            shape = CircleShape,
-                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)),
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .size(150.dp)
-                        ) {
-                            Text(text = stringResource(R.string.saved_reports))
+                        if (isButtonVisible){
+                            Button(
+                                onClick = {
+                                    // Navigate to appropriate screen
+                                    navController.navigate(Routes.savedreports)
+                                },
+                                shape = CircleShape,
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor)),
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .size(150.dp)
+                            ) {
+                                Text(text = stringResource(R.string.saved_reports))
+                            }
                         }
+
                     }
 
                     Row(

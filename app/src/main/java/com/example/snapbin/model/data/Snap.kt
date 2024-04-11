@@ -63,6 +63,6 @@ data class Snap(
     }
     fun getFormattedDate(): String{
         val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-        return "${localDate.dayOfMonth}-${"%02d".format((localDate.month.value + 1))}-${(localDate.year)} ${localDate.hour}:${"%02d".format(localDate.minute)} "
+        return "${localDate.dayOfMonth}-${"%02d".format((localDate.month.value))}-${(localDate.year)} ${localDate.hour}:${"%02d".format(localDate.minute)} "
     }
 }

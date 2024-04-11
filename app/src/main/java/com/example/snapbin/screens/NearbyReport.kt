@@ -1,5 +1,7 @@
 package com.example.snapbin.screens
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +46,7 @@ import com.example.snapbin.Navigation.Routes
 import com.example.snapbin.R
 import com.example.snapbin.data.home.HomeViewModel
 import com.example.snapbin.model.MainNavViewModel
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -117,9 +120,10 @@ fun NearbyReport(navController: NavHostController, homeViewModel: HomeViewModel 
     }
 }
 data class Nearbyreport(
+    val id : String,
     val userId: String,
     val location: String,
-//    val datetime: Date,
+//    val datetime: java.util.Date,
     val description: String,
     val urgency: String,
     val sizeOfTrash: String,
@@ -159,6 +163,10 @@ fun Nearbylistscreen() {
 }
 @Composable
 fun NeardetailDialogue(NearReports: Nearbyreport?, onDismiss: () -> Unit) {
+    var isButtonVisible by remember { mutableStateOf(true) }
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    val adminAccount = "JLvpWlCyRSg6yED3qgjLo9B9Yaz1"
+    isButtonVisible = userId == adminAccount
     if (NearReports != null) {
         Dialog(onDismissRequest = onDismiss) {
             Card(
@@ -182,13 +190,55 @@ fun NeardetailDialogue(NearReports: Nearbyreport?, onDismiss: () -> Unit) {
                     Button(onClick = onDismiss) {
                         Text("Close")
                     }
-                    Button(onClick = onDismiss ) {
-                        Text("Cleaned")
+                    if (isButtonVisible){
+                        Button(onClick = {
+                            isButtonVisible=false
+                            deleteDataFromFirebase1(NearReports) }) {
+                            Text("Cleaned")
+                        }
                     }
                 }
             }
         }
     }
+}
+fun deleteDataFromFirebase1(NearReports: Nearbyreport) {
+
+    val db = Firebase.firestore
+    val userId = Firebase.auth.currentUser?.uid.orEmpty()
+    val snapInfo = hashMapOf(
+        "userId" to userId,
+        "location" to NearReports.location,
+//        "datetime" to newDate,
+        "description" to NearReports.description,
+        "urgency" to NearReports.urgency,
+        "sizeOfTrash" to NearReports.sizeOfTrash,
+        "typeOfTrash" to NearReports.typeOfTrash,
+        "reportBy" to NearReports.reportBy
+    )
+
+    db.collection("snapInfo")
+        .document(NearReports.id)
+        .delete()
+        .addOnSuccessListener {
+            println("Deleted")
+            // Add a new document with a generated ID
+            db.collection("archievedata")
+                .add(snapInfo)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
+//            Myreportlistscreen()
+
+
+        }.addOnFailureListener {
+
+            println("Not Deleted")
+        }
+
 }
 @Composable
 fun ReportCard(NearReports: Nearbyreport, onClick: () -> Unit) {
@@ -242,9 +292,10 @@ fun fetchnearByreport(): State<List<Nearbyreport>> {
             val typeOfTrash = document.getString("typeOfTrash") ?: ""
             val reportBy = document.getString("reportBy") ?: ""
             Nearbyreport(
+                id = id,
                 userId = userId,
                 location = location,
-//                datetime = datetime,
+//                datetime = java.util.Date(),
                 description = description,
                 urgency = urgency,
                 sizeOfTrash = sizeOfTrash,

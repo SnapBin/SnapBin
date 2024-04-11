@@ -136,7 +136,6 @@ fun SnapScreenInfo(navController: NavController, vm: SnapScreenViewModel = viewM
                     storeSnapInfo(sizeOfTrash, typeOfTrash, reportBy)
                     navController.navigate(Routes.HOME_SCREEN)
                 }
-                DraftButton(onClick = { /* Handle Send button click */ })
             }
         )
 
@@ -216,18 +215,6 @@ fun storeSnapInfo(sizeOfTrash: String, typeOfTrash: String, reportBy: String) {
         .addOnFailureListener { exception ->
             Log.e(TAG, "Error getting documents: ", exception)
         }
-
-//    // Add a new document with a generated ID
-//    db.collection("snapInfo")
-//        .add(snapInfo)
-//        .addOnSuccessListener { documentReference ->
-//            // Log successful addition
-//            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-//        }
-//        .addOnFailureListener { e ->
-//            // Log failure
-//            Log.w(TAG, "Error adding document", e)
-//        }
 }
 
 @Composable
@@ -412,99 +399,6 @@ fun RoundButton(
     }
 }
 
-//@Composable
-//fun GridOfButtons(gridName: String, buttonNames: List<String>, buttonImages: List<Int>) {
-//    val selectedButtons = remember { mutableStateListOf<Int>() }
-//
-//    Column(
-//        modifier = Modifier.padding(top = 8.dp)
-//    ) {
-//        // Display grid name
-//        Text(
-//            text = gridName,
-//            fontSize = 16.sp,
-//            color = Color.Black,
-//            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
-//        )
-//
-//        // Create a grid of buttons
-//        for (rowIndex in 0 until 3) {
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.SpaceEvenly
-//            ) {
-//                for (columnIndex in 0 until 3) {
-//                    val index = rowIndex * 3 + columnIndex
-//                    val isSelected = selectedButtons.contains(index)
-//                    val buttonText = if (index < buttonNames.size) buttonNames[index] else ""
-//                    val buttonImage = if (index < buttonImages.size) buttonImages[index] else R.drawable.pointer_green
-//
-//                    // Create individual button
-//                    GridButton(
-//                        selected = isSelected,
-//                        onClick = {
-//                            // Toggle button selection
-//                            if (isSelected) {
-//                                selectedButtons.remove(index)
-//                            } else {
-//                                if (selectedButtons.size < 3) {
-//                                    selectedButtons.add(index)
-//                                }
-//                            }
-//                        },
-//                        buttonText = buttonText,
-//                        image = buttonImage,
-//                        modifier = Modifier.padding(8.dp)
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
-
-
-
-@Composable
-fun GridButton(
-    selected: Boolean,
-    onClick: () -> Unit,
-    buttonText: String,
-    image: Int,
-    modifier: Modifier = Modifier
-) {
-    // Button color and border color based on selection state
-    val buttonColor = Color(0xFF52B69A)
-    val borderColor = if (selected) Color.Blue else Color.Transparent
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.clickable { onClick() } // Toggle button selection
-    ) {
-        // Button content
-        Box(
-            modifier = Modifier
-                .size(80.dp)
-                .background(color = buttonColor, shape = CircleShape)
-                .border(2.dp, borderColor, CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                contentScale = ContentScale.Fit
-            )
-        }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = buttonText,
-            fontSize = 14.sp,
-            color = Color.Black
-        )
-    }
-}
-
-
 @Composable
 fun DropDownBar() {
     val auth = FirebaseAuth.getInstance()
@@ -582,28 +476,32 @@ fun DropDownBar() {
 
 @Composable
 fun SaveSendButton(onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.size(200.dp, 80.dp),
-        shape = RoundedCornerShape(50),
-        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
-
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = stringResource(R.string.save_and_send), color = Color.White)
+        Button(
+            onClick = onClick,
+            modifier = Modifier.size(180.dp, 75.dp),
+            shape = RoundedCornerShape(40),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
+        ) {
+            Text(text = stringResource(R.string.save_and_send), color = Color.White)
+        }
     }
 }
 
-@Composable
-fun DraftButton(onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.size(200.dp, 80.dp),
-        shape = RoundedCornerShape(50),
-        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
-    ) {
-        Text(text = stringResource(R.string.draft), color = Color.White)
-    }
-}
+//@Composable
+//fun DraftButton(onClick: () -> Unit) {
+//    Button(
+//        onClick = onClick,
+//        modifier = Modifier.size(180.dp, 75.dp),
+//        shape = RoundedCornerShape(40),
+//        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.ToppAppBarColor))
+//    ) {
+//        Text(text = stringResource(R.string.draft), color = Color.White)
+//    }
+//}
 
 
 
