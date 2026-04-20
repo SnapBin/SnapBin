@@ -5,6 +5,9 @@ on:
     - cron: '0 9 * * *' # Runs every day at 9:00 AM UTC
   workflow_dispatch:     # Allows manual trigger from GitHub Actions tab
 
+permissions:
+  contents: write
+
 jobs:
   daily-commit:
     runs-on: ubuntu-latest
@@ -12,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update daily log
         run: |
