@@ -177,12 +177,6 @@ Each report includes:
 - 🎮 Gamification (badges/rewards)  
 - 📡 Real-time council tracking  
 - 🌐 Expansion to other cities  
-
----
-
-## 📸 Screenshots
-> *(Add your app screenshots here: Home, Camera, Map, Reports, Events, Profile)*
-
 ---
 
 ## 📦 Installation
