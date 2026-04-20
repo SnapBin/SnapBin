@@ -1,0 +1,28 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Runs every day at 9:00 AM UTC
+  workflow_dispatch:     # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update daily log
+        run: |
+          mkdir -p daily-log
+          DATE=$(date -u +"%Y-%m-%d")
+          echo "[$DATE] Daily build active - SnapBin project maintained" >> daily-log/activity.log
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add daily-log/activity.log
+          git commit -m "chore: daily activity log $(date -u +"%Y-%m-%d")"
+          git push
