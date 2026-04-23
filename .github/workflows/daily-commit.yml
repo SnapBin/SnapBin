@@ -26,8 +26,8 @@ jobs:
 
       - name: Commit and push
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "imraghavbnsal007"
+          git config user.email "raghavb025@gmail.com"
           git add daily-log/activity.log
           git commit -m "chore: daily activity log $(date -u +"%Y-%m-%d")"
           git push
